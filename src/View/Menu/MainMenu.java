@@ -1,6 +1,5 @@
 package View.Menu;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -69,8 +68,6 @@ public class MainMenu extends JPanel {
 
             SpringLayout layout = new SpringLayout();
             setFocusable(true);
-            requestFocusInWindow();
-
             setLayout(layout);
 
             mainPanel = new RoundPanel(AppConstants.BORDER_RADIUS, 0, null, AppColor.blue02);
@@ -170,7 +167,7 @@ public class MainMenu extends JPanel {
         }
 
         void settings() {
-            JPanel parent = ((JPanel) getParent());
+            JPanel parent = (JPanel) getParent();
             parent.remove(controlPanel);
             parent.add(settingsPanel);
 
@@ -181,10 +178,24 @@ public class MainMenu extends JPanel {
 
             parent.revalidate();
             parent.repaint();
+
+            settingsPanel.requestFocusInWindow();
         }
 
         void exit() {
             System.exit(0);
         }
+    }
+
+    public ControlPanel getControlPanel() {
+        return controlPanel;
+    }
+
+    public Settings getSettingsPanel() {
+        return settingsPanel;
+    }
+
+    public SpringLayout getLayout() {
+        return layout;
     }
 }
