@@ -40,6 +40,8 @@ public class Settings extends JPanel implements KeyListener {
         navigationBar = new NavigationBar();
         add(navigationBar, BorderLayout.NORTH);
 
+        add(new Footer(), BorderLayout.SOUTH);
+
         general = new General();
         add(general, BorderLayout.CENTER);
 
@@ -51,13 +53,11 @@ public class Settings extends JPanel implements KeyListener {
 
         keyboard = new Keyboard();
 
-        add(new Footer(), BorderLayout.SOUTH);
-
         addKeyListener(this);
     }
 
     void changeSettings() {
-        remove(1);
+        remove(2);
 
         switch (navigationBar.getTab()) {
             case 0:
@@ -177,12 +177,18 @@ public class Settings extends JPanel implements KeyListener {
             tabPanel.getComponent(tab).setForeground(AppColor.yellow01);
             tab = (tab + 1) % 5;
             tabPanel.getComponent(tab).setForeground(AppColor.red02);
+
+            revalidate();
+            repaint();
         }
 
         void prevTab() {
             tabPanel.getComponent(tab).setForeground(AppColor.yellow01);
             tab = (tab + 4) % 5;
             tabPanel.getComponent(tab).setForeground(AppColor.red02);
+
+            revalidate();
+            repaint();
         }
 
         int getTab() {
@@ -205,6 +211,7 @@ public class Settings extends JPanel implements KeyListener {
             mainPanel.setLayout(new BorderLayout(15, 15));
 
             mainPanel.add(new JLabel("GENERAL_SETTINGS"), BorderLayout.EAST);
+            mainPanel.getComponent(0).setForeground(Color.WHITE);
 
             add(mainPanel);
         }
