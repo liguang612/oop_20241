@@ -18,6 +18,7 @@ import javax.swing.SpringLayout;
 
 import Data.AppColor;
 import Data.AppConstants;
+import View.Game.Game;
 import View.Share.RoundPanel;
 
 public class MainMenu extends JPanel {
@@ -26,8 +27,12 @@ public class MainMenu extends JPanel {
     private Settings settingsPanel;
     private SpringLayout layout;
 
-    public MainMenu() {
+    private Menu parent;
+
+    public MainMenu(Menu parent) {
         super();
+
+        this.parent = parent;
 
         logo = new ImageIcon(getClass().getResource("../../assets/img/logo.jpg")).getImage();
 
@@ -164,6 +169,9 @@ public class MainMenu extends JPanel {
         }
 
         void newGame() {
+            new Game();
+
+            MainMenu.this.parent.setVisible(false);
         }
 
         void settings() {
