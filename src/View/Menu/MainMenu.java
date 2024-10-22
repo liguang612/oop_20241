@@ -79,7 +79,7 @@ public class MainMenu extends JPanel {
             mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
             mainPanel.setLayout(new GridBagLayout());
 
-            pointer = new JLabel(new ImageIcon(getClass().getResource("../../assets/img/pointer.png")));
+            pointer = new JLabel(AppConstants.IMG_CURSOR);
             pointer.setSize(pointer.getPreferredSize().width, 32);
 
             gbc = new GridBagConstraints();

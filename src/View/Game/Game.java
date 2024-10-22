@@ -17,5 +17,7 @@ public class Game extends JFrame {
         this.setLayeredPane(buildTeam);
 
         this.setVisible(true);
+
+        buildTeam.requestFocusInWindow();
     }
 }

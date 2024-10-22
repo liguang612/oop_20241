@@ -1,10 +1,10 @@
 package View.Game;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.SwingUtilities;
 
 import Data.AppConstants;
 
@@ -16,20 +16,42 @@ public class BuildTeam extends JLayeredPane {
     public BuildTeam() {
         super();
 
-        JLabel background = new JLabel(new ImageIcon(getClass().getResource("../../assets/img/game_background.png")));
+        JLabel background = new JLabel(AppConstants.IMG_BACKGROUND1);
         background.setBounds(0, 0, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
         add(background, JLayeredPane.DEFAULT_LAYER);
 
         mainPanel = new JPanel(layout = new SpringLayout());
-        mainPanel.setOpaque(false);
         mainPanel.setBounds(0, 0, AppConstants.SCREEN_WIDTH - 12, AppConstants.SCREEN_HEIGHT - 40);
+        mainPanel.setFocusable(true);
+        mainPanel.setOpaque(false);
 
-        pokeSelection = new PokeSelection();
+        pokeSelection = new PokeSelection(this);
         mainPanel.add(pokeSelection);
         layout.putConstraint(SpringLayout.NORTH, pokeSelection, 0, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.SOUTH, pokeSelection, 0, SpringLayout.SOUTH, mainPanel);
         layout.putConstraint(SpringLayout.EAST, pokeSelection, 0, SpringLayout.EAST, mainPanel);
 
         add(mainPanel, JLayeredPane.PALETTE_LAYER);
+
+        SwingUtilities.invokeLater(() -> {
+            pokeSelection.requestFocusInWindow();
+        });
+    }
+
+    public void hideFilterPopup(JPanel popup) {
+        mainPanel.remove(popup);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+
+    public void showFilterPopup(JPanel popup) {
+        mainPanel.add(popup);
+        layout.putConstraint(SpringLayout.NORTH, popup, 8, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.EAST, popup, 0, SpringLayout.WEST, pokeSelection);
+
+        mainPanel.revalidate();
+        mainPanel.repaint();
+
+        popup.requestFocus();
     }
 }
