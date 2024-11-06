@@ -19,19 +19,20 @@ import javax.swing.JRadioButton;
 
 import Data.AppColor;
 import Data.AppConstants;
+import Model.PokeType;
 
-public class ChoiceList extends RoundPanel implements KeyListener {
+public class ChoiceList<T> extends RoundPanel implements KeyListener {
     private ImageIcon cursor;
     private int cursorIndex = 0;
     private RoundPanel mainPanel;
 
     private List<JRadioButton> choiceButtons;
-    private String[] choices;
+    private T[] choices;
     private Set<Integer> selected;
 
     private JPanel predecessor;
 
-    public ChoiceList(JPanel predecessor, String... choices) {
+    public ChoiceList(JPanel predecessor, T... choices) {
         super(AppConstants.BORDER_RADIUS, 4, Color.BLACK, AppColor.red01);
         this.choices = choices;
         this.predecessor = predecessor;
@@ -59,15 +60,7 @@ public class ChoiceList extends RoundPanel implements KeyListener {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         add(mainPanel);
 
-        choiceButtons = new ArrayList<>();
-        for (String choice : choices) {
-            JRadioButton button = new JRadioButton(choice);
-            button.setFont(button.getFont().deriveFont(24.0f));
-            button.setOpaque(false);
-
-            choiceButtons.add(button);
-            mainPanel.add(button);
-        }
+        initElements();
 
         selected = new HashSet<>();
 
@@ -76,6 +69,22 @@ public class ChoiceList extends RoundPanel implements KeyListener {
 
     public Set<Integer> getSelected() {
         return selected;
+    }
+
+    private void initElements() {
+        choiceButtons = new ArrayList<>();
+        for (T choice : choices) {
+            JRadioButton button = new JRadioButton(choice.toString());
+            if (choice instanceof PokeType) {
+                button.setForeground(((PokeType) choice).getColor());
+            }
+
+            button.setFont(button.getFont().deriveFont(24.0f));
+            button.setOpaque(false);
+
+            choiceButtons.add(button);
+            mainPanel.add(button);
+        }
     }
 
     @Override

@@ -26,8 +26,20 @@ public class AnimatedPanel extends JPanel implements ActionListener {
 
         setOpaque(false);
 
-        timer = new Timer(500, this);
+        timer = new Timer(250, this);
         timer.start();
+    }
+
+    public void start() {
+        if (!timer.isRunning()) {
+            timer.start();
+        }
+    }
+
+    public void stop() {
+        if (timer.isRunning()) {
+            timer.stop();
+        }
     }
 
     @Override

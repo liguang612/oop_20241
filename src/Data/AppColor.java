@@ -3,6 +3,7 @@ package Data;
 import java.awt.Color;
 
 public class AppColor {
+    public static final Color black = Color.BLACK;
     public static final Color blue01 = new Color(0xACD3F3);
     public static final Color blue02 = new Color(0x362D3E);
 
@@ -15,4 +16,6 @@ public class AppColor {
 
     public static final Color red01 = new Color(0xC73625);
     public static final Color red02 = new Color(0xF83018);
+
+    public static final Color white = Color.WHITE;
 }
