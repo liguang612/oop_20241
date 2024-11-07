@@ -135,9 +135,12 @@ public class PokeDetail extends JPanel {
             layout.putConstraint(SpringLayout.NORTH, nameLabel, (namePanel.getHeight() - nameLabel.getHeight()) / 2,
                     SpringLayout.NORTH, namePanel);
 
-            layout.putConstraint(SpringLayout.EAST, genderLabel, -6, SpringLayout.EAST, namePanel);
+            layout.putConstraint(SpringLayout.EAST, genderLabel, -32, SpringLayout.EAST, namePanel);
             layout.putConstraint(SpringLayout.NORTH, genderLabel, (namePanel.getHeight() - genderLabel.getHeight()) / 2,
                     SpringLayout.NORTH, namePanel);
+
+            namePanel.revalidate();
+            namePanel.repaint();
         });
     }
 

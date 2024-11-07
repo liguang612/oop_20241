@@ -41,7 +41,7 @@ public class AppConstants {
         IMG_BACKGROUND1 = new ImageIcon(getClass().getResource("../assets/img/game_background.png"));
         IMG_CURSOR = new ImageIcon(getClass().getResource("../assets/img/cursor.png"));
         IMG_CURSOR_SMALL = new ImageIcon(getClass().getResource("../assets/img/cursor_small.png"));
-        IMG_GENDER_MALE = new ImageIcon(getClass().getResource("../assets/icon/male.png"));
+        IMG_GENDER_MALE = new ImageIcon(getClass().getResource("../assets/img/male.png"));
         IMG_SELECT_CURSOR = new ImageIcon(getClass().getResource("../assets/img/select_cursor.png"));
 
         // Initialize pokemon
