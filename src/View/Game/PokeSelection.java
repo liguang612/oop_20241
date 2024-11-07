@@ -61,10 +61,6 @@ public class PokeSelection extends JPanel {
         parent.showFilterPopup(popup);
     }
 
-    class PokeDetail extends JPanel {
-
-    }
-
     public Filter getFilter() {
         return filter;
     }

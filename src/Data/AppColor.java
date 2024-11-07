@@ -6,9 +6,12 @@ public class AppColor {
     public static final Color black = Color.BLACK;
     public static final Color blue01 = new Color(0xACD3F3);
     public static final Color blue02 = new Color(0x362D3E);
+    public static final Color blue03 = new Color(216, 224, 240);
 
     public static final Color gray01 = new Color(0xBABABA);
     public static final Color gray02 = new Color(0x8A8A8A);
+    public static final Color gray03 = new Color(148, 148, 148);
+    public static final Color gray04 = new Color(156, 156, 156);
 
     public static final Color green01 = new Color(0x68B07A);
 
@@ -18,4 +21,5 @@ public class AppColor {
     public static final Color red02 = new Color(0xF83018);
 
     public static final Color white = Color.WHITE;
+    public static final Color white01 = new Color(240, 248, 248);
 }

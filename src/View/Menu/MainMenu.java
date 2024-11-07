@@ -87,7 +87,7 @@ public class MainMenu extends JPanel {
 
             newGame = new JLabel("New Game", JLabel.LEFT);
             newGame.setForeground(Color.WHITE);
-            newGame.setFont(newGame.getFont().deriveFont(40.0f));
+            newGame.setFont(newGame.getFont().deriveFont(32.0f));
             gbc.gridx = 1;
             gbc.gridy = 0;
             gbc.weightx = 14;
