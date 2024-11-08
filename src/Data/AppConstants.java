@@ -11,10 +11,12 @@ import javax.swing.ImageIcon;
 
 import Model.PokeType;
 import Model.Pokemon;
+import Model.Skill;
 
 public class AppConstants {
     public static Font FONT_AGENCYFB;
     public static Font FONT_CHAVA;
+    public static Font FONT_PIXEL;
 
     public static final int SCREEN_WIDTH = 1694;
     public static final int SCREEN_HEIGHT = 953;
@@ -36,6 +38,7 @@ public class AppConstants {
         // Initialize font
         agencyFB();
         chava();
+        pixel();
 
         // Initialize image
         IMG_BACKGROUND1 = new ImageIcon(getClass().getResource("../assets/img/game_background.png"));
@@ -51,10 +54,11 @@ public class AppConstants {
     // POKEMON
     private Pokemon bulbasaur() {
         PokeType[] types = { PokeType.GRASS, PokeType.POSION };
+        Skill[] skills = { Skill.TACKLE, Skill.GROWL, Skill.VINE_WHIP };
 
         return BULBASAUR = new Pokemon("Overgrown", null,
                 new ImageIcon(getClass().getResource("../assets/icon/bulbasaur.png")), 100, 1, 3, "Bulbasaur",
-                "Dolice (-)", null, types);
+                "Dolice (-)", skills, types);
     }
 
     // FONT
@@ -74,7 +78,18 @@ public class AppConstants {
             InputStream is = new FileInputStream(
                     new File(getClass().getResource("../assets/font/chava.ttf").getPath()));
 
-            FONT_CHAVA = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(24f);
+            FONT_CHAVA = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(48f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void pixel() {
+        try {
+            InputStream is = new FileInputStream(
+                    new File(getClass().getResource("../assets/font/pixel_operator.ttf").getPath()));
+
+            FONT_PIXEL = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(48f);
         } catch (Exception e) {
             e.printStackTrace();
         }

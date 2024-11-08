@@ -32,7 +32,7 @@ public class BuildTeam extends JLayeredPane {
         layout.putConstraint(SpringLayout.SOUTH, pokeSelection, 0, SpringLayout.SOUTH, mainPanel);
         layout.putConstraint(SpringLayout.EAST, pokeSelection, 0, SpringLayout.EAST, mainPanel);
 
-        pokeDetail = new PokeDetail();
+        pokeDetail = new PokeDetail(AppConstants.BULBASAUR);
         mainPanel.add(pokeDetail);
         layout.putConstraint(SpringLayout.NORTH, pokeDetail, 8, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.SOUTH, pokeDetail, -150, SpringLayout.SOUTH, mainPanel);

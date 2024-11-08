@@ -12,6 +12,9 @@ import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.SwingUtilities;
 
 import Data.AppColor;
 import Data.AppConstants;
@@ -35,7 +38,7 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
         setLayout(new GridLayout(0, 9));
 
         for (Pokemon pokemon : AppConstants.ALL_OF_POKEMONS) {
-            add(new AnimatedPanel(pokemon.getAvatar()));
+            add(new PokeLabel(pokemon));
         }
         add(new JLabel("PK"));
         add(new JLabel("PK"));
@@ -180,5 +183,28 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
         revalidate();
         repaint();
+    }
+
+    class PokeLabel extends JPanel {
+        PokeLabel(Pokemon pokemon) {
+            super();
+
+            SpringLayout layout = new SpringLayout();
+            setLayout(layout);
+            setOpaque(false);
+
+            AnimatedPanel anmPanel = new AnimatedPanel(pokemon.getAvatar());
+            add(anmPanel);
+            layout.putConstraint(SpringLayout.NORTH, anmPanel, 0, SpringLayout.NORTH, this);
+            layout.putConstraint(SpringLayout.SOUTH, anmPanel, 0, SpringLayout.SOUTH, this);
+            layout.putConstraint(SpringLayout.WEST, anmPanel, 0, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.EAST, anmPanel, 0, SpringLayout.EAST, this);
+
+            JLabel ivLabel = new JLabel("" + pokemon.getIVs());
+            ivLabel.setFont(ivLabel.getFont().deriveFont(24f));
+            layout.putConstraint(SpringLayout.NORTH, ivLabel, 15, SpringLayout.NORTH, this);
+            layout.putConstraint(SpringLayout.WEST, ivLabel, 15, SpringLayout.WEST, this);
+            add(ivLabel);
+        }
     }
 }

@@ -1,15 +1,15 @@
 package View.Game;
 
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -17,16 +17,22 @@ import javax.swing.SwingUtilities;
 
 import Data.AppColor;
 import Data.AppConstants;
+import Model.PokeType;
 import Model.Pokemon;
+import Model.Skill;
 import Utils.Utils;
+import View.Share.Column;
+import View.Share.Row;
+import View.Share.SpriteAnimation;
 
 public class PokeDetail extends JPanel {
     private Pokemon pokemon;
-    private JLabel genderLabel, idLabel, nameLabel;
-    private JPanel idPanel, inforPanel, namePanel, statPanel;
+    private JLabel abilityLabel, genderLabel, idLabel, nameLabel, natureLabel;
+    private JPanel animationPanel, idPanel, inforPanel, namePanel, statPanel;
 
-    public PokeDetail() {
+    public PokeDetail(Pokemon pokemon) {
         super();
+        this.pokemon = pokemon;
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -51,7 +57,6 @@ public class PokeDetail extends JPanel {
         statPanel = new JPanel();
         statPanel.setBackground(AppColor.blue03);
         statPanel.setBorder(BorderFactory.createLineBorder(AppColor.gray03, 6));
-        initStat();
 
         namePanel = new JPanel() {
             @Override
@@ -99,6 +104,7 @@ public class PokeDetail extends JPanel {
         SwingUtilities.invokeLater(() -> {
             initId();
             initName();
+            initStat();
         });
     }
 
@@ -113,7 +119,7 @@ public class PokeDetail extends JPanel {
         layout.putConstraint(SpringLayout.SOUTH, noLabel, -4, SpringLayout.SOUTH, idPanel);
 
         idLabel = new JLabel(Utils.formatPokeId(0));
-        idLabel.setFont(idLabel.getFont().deriveFont(48f));
+        idLabel.setFont(AppConstants.FONT_CHAVA);
         idPanel.add(idLabel);
         layout.putConstraint(SpringLayout.WEST, idLabel, 6, SpringLayout.EAST, noLabel);
         layout.putConstraint(SpringLayout.SOUTH, idLabel, -4, SpringLayout.SOUTH, idPanel);
@@ -145,13 +151,80 @@ public class PokeDetail extends JPanel {
     }
 
     private void initInfor() {
+        inforPanel.setLayout(new GridLayout(2, 1));
+
+        abilityLabel = new JLabel("Ability: " + pokemon.getAbility());
+        abilityLabel.setFont(abilityLabel.getFont().deriveFont(48f));
+        abilityLabel.setForeground(AppColor.black);
+        inforPanel.add(abilityLabel);
+
+        natureLabel = new JLabel("Nature: " + pokemon.getNature());
+        natureLabel.setFont(abilityLabel.getFont());
+        natureLabel.setForeground(AppColor.black);
+        inforPanel.add(natureLabel);
     }
 
     private void initStat() {
+        SpringLayout layout = new SpringLayout();
+
+        statPanel.setLayout(layout);
+
+        List<JLabel> typeLabels = new ArrayList<>();
+        for (PokeType type : pokemon.getType()) {
+            JLabel label = new JLabel(type.getName());
+            label.setBackground(type.getColor());
+            label.setFont(label.getFont().deriveFont(24f));
+            label.setOpaque(true);
+
+            typeLabels.add(label);
+        }
+        Row typeRow = new Row(8, typeLabels.toArray(new JLabel[0]));
+        statPanel.add(typeRow);
+        layout.putConstraint(SpringLayout.SOUTH, typeRow, -6, SpringLayout.SOUTH, statPanel);
+        layout.putConstraint(SpringLayout.WEST, typeRow, 6, SpringLayout.WEST, statPanel);
+
+        SpriteAnimation sa = new SpriteAnimation(
+                getClass().getResource("../../assets/animation/bulbasaur.png").getPath(),
+                getClass().getResource("../../assets/animation/bulbasaur.json").getPath());
+        statPanel.add(animationPanel = sa.getAnimationPanel());
+
+        List<JLabel> skillLabels = new ArrayList<>();
+        for (Skill skill : pokemon.getSkills()) {
+            JLabel label = new JLabel(skill.getName());
+            label.setBackground(skill.getType().getColor());
+            label.setFont(label.getFont().deriveFont(24f));
+            label.setOpaque(true);
+
+            skillLabels.add(label);
+        }
+        Column skillColumn = new Column(0, skillLabels.toArray(new JLabel[0]));
+        statPanel.add(skillColumn);
+        layout.putConstraint(SpringLayout.NORTH, skillColumn, 0, SpringLayout.NORTH, statPanel);
+        layout.putConstraint(SpringLayout.EAST, skillColumn, 0, SpringLayout.EAST, statPanel);
+
+        sa.startAnimation(75);
+        skillColumn.expandChild();
+
+        SwingUtilities.invokeLater(() -> {
+            System.out.println(animationPanel.getWidth());
+            System.out.println(animationPanel.getHeight());
+            layout.putConstraint(SpringLayout.NORTH, animationPanel,
+                    (statPanel.getHeight() - 100 - animationPanel.getHeight()) / 2, SpringLayout.NORTH, statPanel);
+            layout.putConstraint(SpringLayout.WEST, animationPanel,
+                    (statPanel.getWidth() - 100 - animationPanel.getWidth()) / 2,
+                    SpringLayout.WEST, statPanel);
+        });
     }
 
     public void setPokemon(Pokemon pokemon) {
         this.pokemon = pokemon;
+
+        idLabel.setText(Utils.formatPokeId(pokemon.getId()));
+
+        nameLabel.setText(pokemon.getName());
+
+        abilityLabel.setText("Ability: " + pokemon.getAbility());
+        natureLabel.setText("Nature: " + pokemon.getNature());
     }
 
     @Override
