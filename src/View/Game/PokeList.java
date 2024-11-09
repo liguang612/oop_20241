@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
-import javax.swing.SwingUtilities;
 
 import Data.AppColor;
 import Data.AppConstants;
@@ -35,62 +34,11 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
         setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
         setFocusable(true);
-        setLayout(new GridLayout(0, 9));
+        setLayout(new GridLayout(0, 8, 10, 0));
 
         for (Pokemon pokemon : AppConstants.ALL_OF_POKEMONS) {
             add(new PokeLabel(pokemon));
         }
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
-        add(new JLabel("PK"));
 
         addFocusListener(this);
         addKeyListener(this);
@@ -103,12 +51,12 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
 
         if (cursor != null) {
-            Component comp = getComponent(curY * 9 + curX);
+            Component comp = getComponent(curY * 8 + curX);
             g2d.drawImage(cursor.getImage(), comp.getX(), comp.getY(), comp.getWidth(), comp.getHeight(), this);
 
-            // Start animation (stop will be in keyPressed)
-            if (comp instanceof AnimatedPanel) {
-                ((AnimatedPanel) comp).start();
+            // Start animation in new item, stop will be in keyPressed
+            if (comp instanceof PokeLabel) {
+                ((PokeLabel) comp).start();
             }
         }
     }
@@ -119,18 +67,18 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int abs = curY * 9 + curX;
-        Component comp = getComponent(curY * 9 + curX);
+        int abs = curY * 8 + curX;
+        Component comp = getComponent(curY * 8 + curX);
 
-        // Stop animation, start will be in paintComponent
-        if (comp instanceof AnimatedPanel) {
-            ((AnimatedPanel) comp).stop();
+        // Stop animation in old item, start will be in painComponent
+        if (comp instanceof PokeLabel) {
+            ((PokeLabel) comp).stop();
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             abs++;
-            curX = abs % 9;
-            curY = abs / 9;
+            curX = abs % 8;
+            curY = abs / 8;
 
             revalidate();
             repaint();
@@ -138,31 +86,33 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             abs--;
             if (abs < 0)
                 return;
-            curX = abs % 9;
-            curY = abs / 9;
+            curX = abs % 8;
+            curY = abs / 8;
 
             revalidate();
             repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            abs += 9;
-            curX = abs % 9;
-            curY = abs / 9;
+            abs += 8;
+            curX = abs % 8;
+            curY = abs / 8;
 
             revalidate();
             repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            abs -= 9;
+            abs -= 8;
             if (abs < 0) {
                 parent.getFilter().requestFocusInWindow();
 
                 return;
             }
-            curX = abs % 9;
-            curY = abs / 9;
+            curX = abs % 8;
+            curY = abs / 8;
 
             revalidate();
             repaint();
         }
+
+        comp = getComponent(curY * 8 + curX);
     }
 
     @Override
@@ -186,6 +136,8 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
     }
 
     class PokeLabel extends JPanel {
+        AnimatedPanel anmPanel;
+
         PokeLabel(Pokemon pokemon) {
             super();
 
@@ -193,7 +145,7 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             setLayout(layout);
             setOpaque(false);
 
-            AnimatedPanel anmPanel = new AnimatedPanel(pokemon.getAvatar());
+            anmPanel = new AnimatedPanel(pokemon.getAvatar());
             add(anmPanel);
             layout.putConstraint(SpringLayout.NORTH, anmPanel, 0, SpringLayout.NORTH, this);
             layout.putConstraint(SpringLayout.SOUTH, anmPanel, 0, SpringLayout.SOUTH, this);
@@ -205,6 +157,16 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             layout.putConstraint(SpringLayout.NORTH, ivLabel, 15, SpringLayout.NORTH, this);
             layout.putConstraint(SpringLayout.WEST, ivLabel, 15, SpringLayout.WEST, this);
             add(ivLabel);
+
+            anmPanel.stop();
+        }
+
+        void start() {
+            anmPanel.start();
+        }
+
+        void stop() {
+            anmPanel.stop();
         }
     }
 }

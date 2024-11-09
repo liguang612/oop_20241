@@ -31,6 +31,34 @@ public class AppConstants {
     public static ImageIcon IMG_SELECT_CURSOR;
 
     public static Pokemon BULBASAUR;
+    public static Pokemon CHARMANDER;
+    public static Pokemon CHESPIN;
+    public static Pokemon CHIKORTIA;
+    public static Pokemon CHIMCHAR;
+    public static Pokemon CYNDAQUIL;
+    public static Pokemon FENNEKIN;
+    public static Pokemon FROAKIE;
+    public static Pokemon FUECOCO;
+    public static Pokemon GROOKEY;
+    public static Pokemon LITTEN;
+    public static Pokemon MUDKIP;
+    public static Pokemon OSHAWOTT;
+    public static Pokemon PIPLUP;
+    public static Pokemon POPPLIO;
+    public static Pokemon QUAXLY;
+    public static Pokemon ROWLET;
+    public static Pokemon SCORBUNNY;
+    public static Pokemon SNIVY;
+    public static Pokemon SOBBLE;
+    public static Pokemon SPEAROW;
+    public static Pokemon SPRIGATITO;
+    public static Pokemon SQUIRTLE;
+    public static Pokemon SUNKERN;
+    public static Pokemon TEPIG;
+    public static Pokemon TORCHIC;
+    public static Pokemon TOTODILE;
+    public static Pokemon TREECKO;
+    public static Pokemon TURTWIG;
 
     public static List<Pokemon> ALL_OF_POKEMONS = new ArrayList<>();
 
@@ -49,6 +77,35 @@ public class AppConstants {
 
         // Initialize pokemon
         ALL_OF_POKEMONS.add(bulbasaur());
+        ALL_OF_POKEMONS.add(charmander());
+        ALL_OF_POKEMONS.add(squirtle());
+        ALL_OF_POKEMONS.add(spearow());
+        ALL_OF_POKEMONS.add(chikorita());
+        ALL_OF_POKEMONS.add(cyndaquil());
+        ALL_OF_POKEMONS.add(totodile());
+        ALL_OF_POKEMONS.add(sunkern());
+        ALL_OF_POKEMONS.add(treecko());
+        ALL_OF_POKEMONS.add(chespin());
+        ALL_OF_POKEMONS.add(torchic());
+        ALL_OF_POKEMONS.add(mudkip());
+        ALL_OF_POKEMONS.add(turtwig());
+        ALL_OF_POKEMONS.add(chimchar());
+        ALL_OF_POKEMONS.add(piplup());
+        ALL_OF_POKEMONS.add(snivy());
+        ALL_OF_POKEMONS.add(tepig());
+        ALL_OF_POKEMONS.add(oshawott());
+        ALL_OF_POKEMONS.add(chespin());
+        ALL_OF_POKEMONS.add(fennekin());
+        ALL_OF_POKEMONS.add(froakie());
+        ALL_OF_POKEMONS.add(rowlet());
+        ALL_OF_POKEMONS.add(litten());
+        ALL_OF_POKEMONS.add(popplio());
+        ALL_OF_POKEMONS.add(grookey());
+        ALL_OF_POKEMONS.add(scorbunny());
+        ALL_OF_POKEMONS.add(sobble());
+        ALL_OF_POKEMONS.add(sprigatito());
+        ALL_OF_POKEMONS.add(fuecoco());
+        ALL_OF_POKEMONS.add(quaxly());
     }
 
     // POKEMON
@@ -59,6 +116,258 @@ public class AppConstants {
         return BULBASAUR = new Pokemon("Overgrown", null,
                 new ImageIcon(getClass().getResource("../assets/icon/bulbasaur.png")), 100, 1, 3, "Bulbasaur",
                 "Dolice (-)", skills, types);
+    }
+
+    private Pokemon charmander() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.SCRATCH, Skill.GROWL, Skill.EMBER };
+
+        return CHARMANDER = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/charmander.png")), 100, 4, 3, "Charmander",
+                "Quirky (-)", skills, types);
+    }
+
+    private Pokemon chespin() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.TACKLE, Skill.GROWL, Skill.VINE_WHIP };
+
+        return CHESPIN = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/chespin.png")), 100, 650, 3, "Chespin",
+                "Bashful (-)", skills, types);
+    }
+
+    private Pokemon chikorita() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.TACKLE, Skill.GROWL, Skill.RAZOR_LEAF };
+
+        return CHIKORTIA = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/chikorita.png")), 100, 152, 2, "Chikorita",
+                "Quirky (-)", skills, types);
+    }
+
+    private Pokemon chimchar() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.SCRATCH, Skill.LEER, Skill.EMBER };
+
+        return CHIMCHAR = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/chimchar.png")), 100, 390, 3, "Chimchar",
+                "Hardy (-)", skills, types);
+    }
+
+    private Pokemon cyndaquil() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.TACKLE, Skill.LEER, Skill.EMBER };
+
+        return CYNDAQUIL = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/cyndaquil.png")), 100, 155, 3, "Cyndaquil",
+                "Serious (-)", skills, types);
+    }
+
+    private Pokemon fennekin() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.SCRATCH, Skill.TALL_WHIP, Skill.EMBER };
+
+        return FENNEKIN = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/fennekin.png")), 100, 653, 3, "Fennekin",
+                "Bashful (-)", skills, types);
+    }
+
+    private Pokemon froakie() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.POUND, Skill.GROWL, Skill.WATER_GUN };
+
+        return FROAKIE = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/froakie.png")), 100, 656, 4, "Froakie",
+                "Hardy (-)", skills, types);
+    }
+
+    private Pokemon fuecoco() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.TACKLE, Skill.LEER, Skill.EMBER };
+
+        return FUECOCO = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/fuecoco.png")), 100, 909, 4, "Fuecoco",
+                "Bashful (-)", skills, types);
+    }
+
+    private Pokemon grookey() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.SCRATCH, Skill.GROWL, Skill.BRANCH_POKE };
+
+        return GROOKEY = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/grookey.png")), 100, 810, 3, "Grookey",
+                "Hardy (-)", skills, types);
+    }
+
+    private Pokemon litten() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.SCRATCH, Skill.GROWL, Skill.EMBER };
+
+        return LITTEN = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/litten.png")), 100, 725, 3, "Litten",
+                "Bashful (-)", skills, types);
+    }
+
+    private Pokemon mudkip() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.TACKLE, Skill.GROWL, Skill.WATER_GUN };
+
+        return MUDKIP = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/mudkip.png")), 100, 258, 3, "Mudkip",
+                "Bashful (-)", skills, types);
+    }
+
+    private Pokemon oshawott() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.TACKLE, Skill.TALL_WHIP, Skill.WATER_GUN };
+
+        return OSHAWOTT = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/oshawott.png")), 100, 501, 3, "Oshawott",
+                "Serious (-)", skills, types);
+    }
+
+    private Pokemon piplup() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.POUND, Skill.GROWL, Skill.WATER_GUN };
+
+        return PIPLUP = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/piplup.png")), 100, 393, 3, "Piplup",
+                "Serious (-)", skills, types);
+    }
+
+    private Pokemon popplio() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.POUND, Skill.GROWL, Skill.WATER_GUN };
+
+        return POPPLIO = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/popplio.png")), 100, 728, 4, "Popplio",
+                "Bashful (-)", skills, types);
+    }
+
+    private Pokemon quaxly() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.POUND, Skill.GROWL, Skill.WATER_GUN };
+
+        return QUAXLY = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/charmander.png")), 100, 912, 4, "Quaxly",
+                "Bashful (-)", skills, types);
+    }
+
+    private Pokemon rowlet() {
+        PokeType[] types = { PokeType.GRASS, PokeType.FLYING };
+        Skill[] skills = { Skill.TACKLE, Skill.GROWL, Skill.LEAFAGE };
+
+        return ROWLET = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/rowlet.png")), 100, 722, 3, "Rowlet",
+                "Quirky (-)", skills, types);
+    }
+
+    private Pokemon scorbunny() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.TACKLE, Skill.GROWL, Skill.EMBER };
+
+        return SCORBUNNY = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/scorbunny.png")), 100, 813, 4, "Scorbunny",
+                "Quirky (-)", skills, types);
+    }
+
+    private Pokemon snivy() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.TACKLE, Skill.LEER, Skill.VINE_WHIP };
+
+        return SNIVY = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/snivy.png")), 100, 495, 3, "Snivy",
+                "Quirky (-)", skills, types);
+    }
+
+    private Pokemon sobble() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.POUND, Skill.GROWL, Skill.WATER_GUN };
+
+        return SOBBLE = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/sobble.png")), 100, 816, 3, "Sobble",
+                "Serious (-)", skills, types);
+    }
+
+    private Pokemon spearow() {
+        PokeType[] types = { PokeType.NORMAL, PokeType.FLYING };
+        Skill[] skills = { Skill.GROWL, Skill.PECK, Skill.LEER };
+
+        return SPEAROW = new Pokemon("Keen Eye", null,
+                new ImageIcon(getClass().getResource("../assets/icon/spearow.png")), 100, 21, 1, "Spearow",
+                "Naughty (+Afk/-SpDef)", skills, types);
+    }
+
+    private Pokemon sprigatito() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.SCRATCH, Skill.TALL_WHIP, Skill.LEAFAGE };
+
+        return SPRIGATITO = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/sprigatito.png")), 100, 906, 4, "Sprigatito",
+                "Hardry (-)", skills, types);
+    }
+
+    private Pokemon squirtle() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.TACKLE, Skill.TALL_WHIP, Skill.WATER_GUN };
+
+        return SQUIRTLE = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/squirtle.png")), 100, 7, 3, "Squirtle",
+                "Hardy (-)", skills, types);
+    }
+
+    private Pokemon sunkern() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.TACKLE, Skill.GROWTH };
+
+        return SUNKERN = new Pokemon("Solar Power", null,
+                new ImageIcon(getClass().getResource("../assets/icon/sunkern.png")), 100, 191, 1, "Sunkern",
+                "Naughty (+Atk/-SpDef)", skills, types);
+    }
+
+    private Pokemon tepig() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.TACKLE, Skill.TALL_WHIP, Skill.EMBER };
+
+        return TEPIG = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/tepig.png")), 100, 498, 3, "Tepig",
+                "Serious (-)", skills, types);
+    }
+
+    private Pokemon torchic() {
+        PokeType[] types = { PokeType.FIRE };
+        Skill[] skills = { Skill.SCRATCH, Skill.GROWL, Skill.EMBER };
+
+        return TORCHIC = new Pokemon("Blaze", null,
+                new ImageIcon(getClass().getResource("../assets/icon/charmander.png")), 100, 255, 4, "Torchic",
+                "Serious (-)", skills, types);
+    }
+
+    private Pokemon totodile() {
+        PokeType[] types = { PokeType.WATER };
+        Skill[] skills = { Skill.SCRATCH, Skill.LEER, Skill.WATER_GUN };
+
+        return TOTODILE = new Pokemon("Torrent", null,
+                new ImageIcon(getClass().getResource("../assets/icon/totodile.png")), 100, 158, 3, "Totodile",
+                "Serious (-)", skills, types);
+    }
+
+    private Pokemon treecko() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.POUND, Skill.LEER, Skill.LEAFAGE };
+
+        return TREECKO = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/treecko.png")), 100, 252, 3, "Treecko",
+                "Dolice (-)", skills, types);
+    }
+
+    private Pokemon turtwig() {
+        PokeType[] types = { PokeType.GRASS };
+        Skill[] skills = { Skill.SCRATCH, Skill.WITHDRAW, Skill.LEAFAGE };
+
+        return TURTWIG = new Pokemon("Overgrow", null,
+                new ImageIcon(getClass().getResource("../assets/icon/turtwig.png")), 100, 387, 3, "Turtwig",
+                "Bashful (-)", skills, types);
     }
 
     // FONT

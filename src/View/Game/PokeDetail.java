@@ -183,11 +183,6 @@ public class PokeDetail extends JPanel {
         layout.putConstraint(SpringLayout.SOUTH, typeRow, -6, SpringLayout.SOUTH, statPanel);
         layout.putConstraint(SpringLayout.WEST, typeRow, 6, SpringLayout.WEST, statPanel);
 
-        SpriteAnimation sa = new SpriteAnimation(
-                getClass().getResource("../../assets/animation/bulbasaur.png").getPath(),
-                getClass().getResource("../../assets/animation/bulbasaur.json").getPath());
-        statPanel.add(animationPanel = sa.getAnimationPanel());
-
         List<JLabel> skillLabels = new ArrayList<>();
         for (Skill skill : pokemon.getSkills()) {
             JLabel label = new JLabel(skill.getName());
@@ -197,22 +192,27 @@ public class PokeDetail extends JPanel {
 
             skillLabels.add(label);
         }
+
         Column skillColumn = new Column(0, skillLabels.toArray(new JLabel[0]));
         statPanel.add(skillColumn);
         layout.putConstraint(SpringLayout.NORTH, skillColumn, 0, SpringLayout.NORTH, statPanel);
         layout.putConstraint(SpringLayout.EAST, skillColumn, 0, SpringLayout.EAST, statPanel);
-
-        sa.startAnimation(75);
         skillColumn.expandChild();
 
+        SpriteAnimation sa = new SpriteAnimation(
+                getClass().getResource("../../assets/animation/bulbasaur.png").getPath(),
+                getClass().getResource("../../assets/animation/bulbasaur.json").getPath());
+        statPanel.add(animationPanel = sa.getAnimationPanel());
+        sa.startAnimation(75);
+
         SwingUtilities.invokeLater(() -> {
-            System.out.println(animationPanel.getWidth());
-            System.out.println(animationPanel.getHeight());
             layout.putConstraint(SpringLayout.NORTH, animationPanel,
-                    (statPanel.getHeight() - 100 - animationPanel.getHeight()) / 2, SpringLayout.NORTH, statPanel);
+                    (statPanel.getHeight() - animationPanel.getHeight()) / 2, SpringLayout.NORTH, statPanel);
             layout.putConstraint(SpringLayout.WEST, animationPanel,
-                    (statPanel.getWidth() - 100 - animationPanel.getWidth()) / 2,
-                    SpringLayout.WEST, statPanel);
+                    (statPanel.getWidth() - animationPanel.getWidth()) / 2, SpringLayout.WEST, statPanel);
+
+            statPanel.revalidate();
+            statPanel.repaint();
         });
     }
 
