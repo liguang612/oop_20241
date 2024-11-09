@@ -7,6 +7,7 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
 
 import Data.AppConstants;
+import Model.Pokemon;
 
 public class BuildTeam extends JLayeredPane {
     private JPanel mainPanel;
@@ -44,6 +45,10 @@ public class BuildTeam extends JLayeredPane {
         SwingUtilities.invokeLater(() -> {
             pokeSelection.requestFocusInWindow();
         });
+    }
+
+    protected void changePokemon(Pokemon pokemon) {
+        pokeDetail.setPokemon(pokemon);
     }
 
     public void hideFilterPopup(JPanel popup) {

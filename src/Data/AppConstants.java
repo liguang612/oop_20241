@@ -339,7 +339,7 @@ public class AppConstants {
         Skill[] skills = { Skill.SCRATCH, Skill.GROWL, Skill.EMBER };
 
         return TORCHIC = new Pokemon("Blaze", null,
-                new ImageIcon(getClass().getResource("../assets/icon/charmander.png")), 100, 255, 4, "Torchic",
+                new ImageIcon(getClass().getResource("../assets/icon/torchic.png")), 100, 255, 4, "Torchic",
                 "Serious (-)", skills, types);
     }
 

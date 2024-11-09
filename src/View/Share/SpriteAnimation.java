@@ -13,8 +13,7 @@ import javax.swing.Timer;
 
 import Utils.Utils;
 
-public class SpriteAnimation {
-    private JPanel animationPanel;
+public class SpriteAnimation extends JPanel {
     private List<Rectangle> coords;
     private int currentFrame;
     private BufferedImage spriteSheet;
@@ -23,23 +22,24 @@ public class SpriteAnimation {
     private final int SIZE = 150;
 
     public SpriteAnimation(String spriteSheetPath, String spriteCoordinatesPath) {
+        super();
+        setOpaque(false);
+        setPreferredSize(new Dimension(SIZE, SIZE));
+
         try {
             this.spriteSheet = ImageIO.read(new File(spriteSheetPath));
             this.currentFrame = 0;
 
             coords = Utils.parseSpriteCoordinates(spriteCoordinatesPath);
-
-            this.animationPanel = new JPanel() {
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    drawCurrentFrame(g);
-                };
-            };
-            animationPanel.setOpaque(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawCurrentFrame(g);
+    };
 
     private void drawCurrentFrame(Graphics g) {
         Rectangle coord = coords.get(currentFrame);
@@ -47,15 +47,10 @@ public class SpriteAnimation {
                 null);
     }
 
-    public JPanel getAnimationPanel() {
-        this.animationPanel.setPreferredSize(new Dimension(SIZE, SIZE));
-        return this.animationPanel;
-    }
-
     public void startAnimation(int delay) {
         timer = new Timer(delay, (e) -> {
             currentFrame = (currentFrame + 1) % coords.size();
-            animationPanel.repaint();
+            repaint();
         });
         timer.start();
     }

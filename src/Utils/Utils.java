@@ -12,7 +12,7 @@ import org.json.JSONObject;
 public class Utils {
     public static String formatPokeId(int id) {
         String res = "";
-        for (int i = 0; i < 3 - id / 10; i++) {
+        for (int i = 0; i < 3 - (int) Math.log10(id); i++) {
             res += '0';
         }
 

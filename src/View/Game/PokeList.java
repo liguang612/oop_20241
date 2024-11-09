@@ -76,7 +76,9 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            abs++;
+            if (abs + 1 < AppConstants.ALL_OF_POKEMONS.size()) {
+                abs++;
+            }
             curX = abs % 8;
             curY = abs / 8;
 
@@ -92,7 +94,9 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             revalidate();
             repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            abs += 8;
+            if (AppConstants.ALL_OF_POKEMONS.size() > abs + 8) {
+                abs += 8;
+            }
             curX = abs % 8;
             curY = abs / 8;
 
@@ -112,7 +116,7 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             repaint();
         }
 
-        comp = getComponent(curY * 8 + curX);
+        parent.changePokemon(AppConstants.ALL_OF_POKEMONS.get(curY * 8 + curX));
     }
 
     @Override

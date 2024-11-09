@@ -26,9 +26,12 @@ import View.Share.Row;
 import View.Share.SpriteAnimation;
 
 public class PokeDetail extends JPanel {
-    private Pokemon pokemon;
+    private Column skillColumn;
     private JLabel abilityLabel, genderLabel, idLabel, nameLabel, natureLabel;
-    private JPanel animationPanel, idPanel, inforPanel, namePanel, statPanel;
+    private JPanel idPanel, inforPanel, namePanel, statPanel;
+    private Pokemon pokemon;
+    private Row typeRow;
+    private SpriteAnimation animationPanel;
 
     public PokeDetail(Pokemon pokemon) {
         super();
@@ -178,7 +181,7 @@ public class PokeDetail extends JPanel {
 
             typeLabels.add(label);
         }
-        Row typeRow = new Row(8, typeLabels.toArray(new JLabel[0]));
+        typeRow = new Row(8, typeLabels.toArray(new JLabel[0]));
         statPanel.add(typeRow);
         layout.putConstraint(SpringLayout.SOUTH, typeRow, -6, SpringLayout.SOUTH, statPanel);
         layout.putConstraint(SpringLayout.WEST, typeRow, 6, SpringLayout.WEST, statPanel);
@@ -192,18 +195,17 @@ public class PokeDetail extends JPanel {
 
             skillLabels.add(label);
         }
-
-        Column skillColumn = new Column(0, skillLabels.toArray(new JLabel[0]));
+        skillColumn = new Column(0, skillLabels.toArray(new JLabel[0]));
         statPanel.add(skillColumn);
         layout.putConstraint(SpringLayout.NORTH, skillColumn, 0, SpringLayout.NORTH, statPanel);
         layout.putConstraint(SpringLayout.EAST, skillColumn, 0, SpringLayout.EAST, statPanel);
         skillColumn.expandChild();
 
-        SpriteAnimation sa = new SpriteAnimation(
+        SpriteAnimation animationPanel = new SpriteAnimation(
                 getClass().getResource("../../assets/animation/bulbasaur.png").getPath(),
                 getClass().getResource("../../assets/animation/bulbasaur.json").getPath());
-        statPanel.add(animationPanel = sa.getAnimationPanel());
-        sa.startAnimation(75);
+        statPanel.add(animationPanel);
+        animationPanel.startAnimation(75);
 
         SwingUtilities.invokeLater(() -> {
             layout.putConstraint(SpringLayout.NORTH, animationPanel,
@@ -225,6 +227,28 @@ public class PokeDetail extends JPanel {
 
         abilityLabel.setText("Ability: " + pokemon.getAbility());
         natureLabel.setText("Nature: " + pokemon.getNature());
+
+        List<JLabel> typeLabels = new ArrayList<>();
+        for (PokeType type : pokemon.getType()) {
+            JLabel label = new JLabel(type.getName());
+            label.setBackground(type.getColor());
+            label.setFont(label.getFont().deriveFont(24f));
+            label.setOpaque(true);
+
+            typeLabels.add(label);
+        }
+        typeRow.resetChildren(typeLabels.toArray(new JLabel[0]));
+
+        List<JLabel> skillLabels = new ArrayList<>();
+        for (Skill skill : pokemon.getSkills()) {
+            JLabel label = new JLabel(skill.getName());
+            label.setBackground(skill.getType().getColor());
+            label.setFont(label.getFont().deriveFont(24f));
+            label.setOpaque(true);
+
+            skillLabels.add(label);
+        }
+        skillColumn.resetChildren(skillLabels.toArray(new JLabel[0]));
     }
 
     @Override

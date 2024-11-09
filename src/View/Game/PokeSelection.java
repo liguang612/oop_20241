@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
 import Data.AppConstants;
+import Model.Pokemon;
 
 public class PokeSelection extends JPanel {
     private SpringLayout layout;
@@ -51,6 +52,10 @@ public class PokeSelection extends JPanel {
                 pokeList.requestFocusInWindow();
             }
         });
+    }
+
+    protected void changePokemon(Pokemon pokemon) {
+        parent.changePokemon(pokemon);
     }
 
     protected void hideFilterPopup(JPanel popup) {
