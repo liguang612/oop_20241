@@ -2,9 +2,11 @@ package Model;
 
 import javax.swing.ImageIcon;
 
+import View.Share.SpriteAnimation;
+
 public class Pokemon {
     private String ability;
-    private ImageIcon[] animations;
+    private SpriteAnimation animation;
     private ImageIcon avatar;
     private boolean gender; // true: male; false: female
     private int hp;
@@ -15,10 +17,10 @@ public class Pokemon {
     private Skill[] skills;
     private PokeType[] type;
 
-    public Pokemon(String ability, ImageIcon[] animations, ImageIcon avatar, int hp, int id, int IVs, String name,
+    public Pokemon(String ability, Animation animation, ImageIcon avatar, int hp, int id, int IVs, String name,
             String nature, Skill[] skills, PokeType[] type) {
         this.ability = ability;
-        this.animations = animations;
+        this.animation = new SpriteAnimation(animation.getSpritePath(), animation.getJsonPath());
         this.avatar = avatar;
         gender = true;
         this.hp = hp;
@@ -38,8 +40,8 @@ public class Pokemon {
         return ability;
     }
 
-    public ImageIcon[] getAnimations() {
-        return animations;
+    public SpriteAnimation getAnimation() {
+        return animation;
     }
 
     public ImageIcon getAvatar() {

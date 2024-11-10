@@ -52,7 +52,8 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
         if (cursor != null) {
             Component comp = getComponent(curY * 8 + curX);
-            g2d.drawImage(cursor.getImage(), comp.getX(), comp.getY(), comp.getWidth(), comp.getHeight(), this);
+            g2d.drawImage(cursor.getImage(), comp.getX(), comp.getY(), comp.getWidth(),
+                    comp.getHeight(), this);
 
             // Start animation in new item, stop will be in keyPressed
             if (comp instanceof PokeLabel) {
@@ -114,6 +115,8 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
             revalidate();
             repaint();
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            ((PokeLabel) comp).switchSelect();
         }
 
         parent.changePokemon(AppConstants.ALL_OF_POKEMONS.get(curY * 8 + curX));
@@ -141,6 +144,7 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
     class PokeLabel extends JPanel {
         AnimatedPanel anmPanel;
+        boolean isSelected;
 
         PokeLabel(Pokemon pokemon) {
             super();
@@ -163,6 +167,26 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             add(ivLabel);
 
             anmPanel.stop();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            if (isSelected) {
+                Graphics2D g2d = (Graphics2D) g;
+
+                g2d.drawImage(AppConstants.IMG_SELECT_CURSOR_HIGHLIGHT.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        }
+
+        boolean switchSelect() {
+            isSelected = !isSelected;
+
+            revalidate();
+            repaint();
+
+            return isSelected;
         }
 
         void start() {

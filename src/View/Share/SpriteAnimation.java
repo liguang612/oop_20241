@@ -31,6 +31,11 @@ public class SpriteAnimation extends JPanel {
             this.currentFrame = 0;
 
             coords = Utils.parseSpriteCoordinates(spriteCoordinatesPath);
+
+            timer = new Timer(75, (e) -> {
+                currentFrame = (currentFrame + 1) % coords.size();
+                repaint();
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,11 +52,11 @@ public class SpriteAnimation extends JPanel {
                 null);
     }
 
-    public void startAnimation(int delay) {
-        timer = new Timer(delay, (e) -> {
-            currentFrame = (currentFrame + 1) % coords.size();
-            repaint();
-        });
+    public void startAnimation() {
         timer.start();
+    }
+
+    public void stopAnimation() {
+        timer.stop();
     }
 }

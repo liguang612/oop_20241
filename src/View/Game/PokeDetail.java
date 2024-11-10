@@ -1,5 +1,7 @@
 package View.Game;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -172,26 +174,22 @@ public class PokeDetail extends JPanel {
 
         statPanel.setLayout(layout);
 
-        List<JLabel> typeLabels = new ArrayList<>();
+        List<TypeLabel> typeLabels = new ArrayList<>();
         for (PokeType type : pokemon.getType()) {
-            JLabel label = new JLabel(type.getName());
-            label.setBackground(type.getColor());
+            TypeLabel label = new TypeLabel(type.getName(), type.getColor());
             label.setFont(label.getFont().deriveFont(24f));
-            label.setOpaque(true);
 
             typeLabels.add(label);
         }
-        typeRow = new Row(8, typeLabels.toArray(new JLabel[0]));
+        typeRow = new Row(8, typeLabels.toArray(new TypeLabel[0]));
         statPanel.add(typeRow);
         layout.putConstraint(SpringLayout.SOUTH, typeRow, -6, SpringLayout.SOUTH, statPanel);
         layout.putConstraint(SpringLayout.WEST, typeRow, 6, SpringLayout.WEST, statPanel);
 
-        List<JLabel> skillLabels = new ArrayList<>();
+        List<TypeLabel> skillLabels = new ArrayList<>();
         for (Skill skill : pokemon.getSkills()) {
-            JLabel label = new JLabel(skill.getName());
-            label.setBackground(skill.getType().getColor());
+            TypeLabel label = new TypeLabel(skill.getName(), skill.getType().getColor());
             label.setFont(label.getFont().deriveFont(24f));
-            label.setOpaque(true);
 
             skillLabels.add(label);
         }
@@ -201,11 +199,11 @@ public class PokeDetail extends JPanel {
         layout.putConstraint(SpringLayout.EAST, skillColumn, 0, SpringLayout.EAST, statPanel);
         skillColumn.expandChild();
 
-        SpriteAnimation animationPanel = new SpriteAnimation(
+        animationPanel = new SpriteAnimation(
                 getClass().getResource("../../assets/animation/bulbasaur.png").getPath(),
                 getClass().getResource("../../assets/animation/bulbasaur.json").getPath());
         statPanel.add(animationPanel);
-        animationPanel.startAnimation(75);
+        animationPanel.startAnimation();
 
         SwingUtilities.invokeLater(() -> {
             layout.putConstraint(SpringLayout.NORTH, animationPanel,
@@ -228,31 +226,76 @@ public class PokeDetail extends JPanel {
         abilityLabel.setText("Ability: " + pokemon.getAbility());
         natureLabel.setText("Nature: " + pokemon.getNature());
 
-        List<JLabel> typeLabels = new ArrayList<>();
+        List<TypeLabel> typeLabels = new ArrayList<>();
         for (PokeType type : pokemon.getType()) {
-            JLabel label = new JLabel(type.getName());
-            label.setBackground(type.getColor());
+            TypeLabel label = new TypeLabel(type.getName(), type.getColor());
             label.setFont(label.getFont().deriveFont(24f));
-            label.setOpaque(true);
 
             typeLabels.add(label);
         }
-        typeRow.resetChildren(typeLabels.toArray(new JLabel[0]));
+        typeRow.resetChildren(typeLabels.toArray(new TypeLabel[0]));
 
-        List<JLabel> skillLabels = new ArrayList<>();
+        List<TypeLabel> skillLabels = new ArrayList<>();
         for (Skill skill : pokemon.getSkills()) {
-            JLabel label = new JLabel(skill.getName());
+            TypeLabel label = new TypeLabel(skill.getName(), skill.getType().getColor());
             label.setBackground(skill.getType().getColor());
             label.setFont(label.getFont().deriveFont(24f));
-            label.setOpaque(true);
 
             skillLabels.add(label);
         }
-        skillColumn.resetChildren(skillLabels.toArray(new JLabel[0]));
+        skillColumn.resetChildren(skillLabels.toArray(new TypeLabel[0]));
+
+        animationPanel.stopAnimation();
+        statPanel.remove(animationPanel);
+        statPanel.add(animationPanel = pokemon.getAnimation());
+        animationPanel.startAnimation();
+
+        SpringLayout layout = ((SpringLayout) statPanel.getLayout());
+
+        SwingUtilities.invokeLater(() -> {
+            layout.putConstraint(SpringLayout.NORTH, animationPanel,
+                    (statPanel.getHeight() - animationPanel.getHeight()) / 2, SpringLayout.NORTH, statPanel);
+            layout.putConstraint(SpringLayout.WEST, animationPanel,
+                    (statPanel.getWidth() - animationPanel.getWidth()) / 2, SpringLayout.WEST, statPanel);
+
+            statPanel.revalidate();
+            statPanel.repaint();
+        });
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+    }
+
+    class TypeLabel extends JLabel {
+        public TypeLabel(String text, Color background) {
+            super(text);
+            setBackground(background);
+            setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+            setOpaque(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g;
+
+            Color backgroundColor = getBackground();
+            Color topBorderColor = backgroundColor.brighter();
+            Color bottomBorderColor = backgroundColor.darker();
+
+            g2.setColor(backgroundColor);
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 8, 8);
+
+            g2.setStroke(new BasicStroke(4));
+
+            g2.setColor(topBorderColor);
+            g2.drawLine(4, 2, getWidth() - 4, 2);
+
+            g2.setColor(bottomBorderColor);
+            g2.drawLine(4, getHeight() - 2, getWidth() - 4, getHeight() - 2);
+
+            super.paintComponent(g);
+        }
     }
 }

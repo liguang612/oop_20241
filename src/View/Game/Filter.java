@@ -45,7 +45,7 @@ class Filter extends RoundPanel implements FocusListener, KeyListener {
 
         gen = new JLabel("Gen", JLabel.CENTER);
         gen.setForeground(Color.WHITE);
-        gen.setFont(gen.getFont().deriveFont(32.0f));
+        gen.setFont(AppConstants.FONT_CONSOLAS);
         mainPanel.add(gen);
 
         genList = new ChoiceList<String>(this, "All", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX");
