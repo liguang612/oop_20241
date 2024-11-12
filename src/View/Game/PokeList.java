@@ -116,7 +116,14 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             revalidate();
             repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            ((PokeLabel) comp).switchSelect();
+            PokeLabel pl = ((PokeLabel) comp);
+
+            if (pl.switchSelect()) {
+                if (!parent.getPokeSelected().selectPoke(abs))
+                    pl.switchSelect();
+
+            } else
+                parent.getPokeSelected().unselectPoke(abs);
         }
 
         parent.changePokemon(AppConstants.ALL_OF_POKEMONS.get(curY * 8 + curX));

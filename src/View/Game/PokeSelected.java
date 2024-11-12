@@ -2,6 +2,8 @@ package View.Game;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,17 +15,20 @@ import javax.swing.SpringLayout;
 
 import Data.AppColor;
 import Data.AppConstants;
+import Model.Pokemon;
 import View.Share.AnimatedPanel;
 import View.Share.RoundPanel;
 
 @SuppressWarnings("unused")
 
 class PokeSelected extends JPanel {
-    private int count = 0;
     private JLabel countLabel;
     private PokeSelection parent;
     private RoundPanel mainSelected, mainTotal, selected, total;
     private SpringLayout layout;
+
+    private int count = 0, totalIV = 0;
+    private List<Pokemon> pokemons = new ArrayList<>();
 
     PokeSelected(PokeSelection parent) {
         this.parent = parent;
@@ -55,25 +60,19 @@ class PokeSelected extends JPanel {
 
         mainSelected = new RoundPanel(AppConstants.BORDER_RADIUS, 0, null, AppColor.blue02);
         mainSelected.setLayout(new GridLayout(6, 1));
-        mainSelected
-                .add(new AnimatedPanel(new ImageIcon(getClass().getResource("../../assets/img/unknown_poke.png"))));
-        mainSelected
-                .add(new AnimatedPanel(new ImageIcon(getClass().getResource("../../assets/img/unknown_poke.png"))));
-        mainSelected
-                .add(new AnimatedPanel(new ImageIcon(getClass().getResource("../../assets/img/unknown_poke.png"))));
-        mainSelected
-                .add(new AnimatedPanel(new ImageIcon(getClass().getResource("../../assets/img/unknown_poke.png"))));
-        mainSelected
-                .add(new AnimatedPanel(new ImageIcon(getClass().getResource("../../assets/img/unknown_poke.png"))));
-        mainSelected
-                .add(new AnimatedPanel(new ImageIcon(getClass().getResource("../../assets/img/unknown_poke.png"))));
+        mainSelected.add(new AnimatedPanel(AppConstants.IMG_UNKNOWN_POKE));
+        mainSelected.add(new AnimatedPanel(AppConstants.IMG_UNKNOWN_POKE));
+        mainSelected.add(new AnimatedPanel(AppConstants.IMG_UNKNOWN_POKE));
+        mainSelected.add(new AnimatedPanel(AppConstants.IMG_UNKNOWN_POKE));
+        mainSelected.add(new AnimatedPanel(AppConstants.IMG_UNKNOWN_POKE));
+        mainSelected.add(new AnimatedPanel(AppConstants.IMG_UNKNOWN_POKE));
         selected.add(mainSelected);
 
         mainTotal = new RoundPanel(AppConstants.BORDER_RADIUS, 0, null, AppColor.blue02);
         mainTotal.setLayout(new BoxLayout(mainTotal, BoxLayout.Y_AXIS));
         total.add(mainTotal);
 
-        countLabel = new JLabel("" + count + "/10", JLabel.CENTER);
+        countLabel = new JLabel("" + totalIV + "/10", JLabel.CENTER);
 
         Box box = Box.createVerticalBox();
         box.setAlignmentX(Box.CENTER_ALIGNMENT);
@@ -82,5 +81,47 @@ class PokeSelected extends JPanel {
         box.add(new JLabel("Total", JLabel.CENTER));
         box.add(Box.createVerticalGlue());
         mainTotal.add(box);
+    }
+
+    protected boolean selectPoke(int index) {
+        Pokemon pokemon = AppConstants.ALL_OF_POKEMONS.get(index);
+        if (pokemon.getIVs() + totalIV > 10)
+            return false;
+
+        ((AnimatedPanel) mainSelected.getComponent(pokemons.size())).setImg(pokemon.getAvatar());
+
+        totalIV += pokemon.getIVs();
+        countLabel.setText("" + totalIV + "/10");
+
+        pokemons.add(pokemon);
+
+        mainSelected.revalidate();
+        mainSelected.repaint();
+
+        return true;
+    }
+
+    protected void unselectPoke(int index) {
+        Pokemon pokemon = AppConstants.ALL_OF_POKEMONS.get(index);
+        int idx = pokemons.indexOf(pokemon);
+
+        AnimatedPanel ap = ((AnimatedPanel) mainSelected.getComponent(idx));
+        ap.setImg(AppConstants.IMG_UNKNOWN_POKE);
+
+        mainSelected.remove(idx);
+        mainSelected.add(ap);
+
+        totalIV -= pokemon.getIVs();
+        countLabel.setText("" + totalIV + "/10");
+
+        pokemons.remove(idx);
+    }
+
+    public int getTotalIV() {
+        return totalIV;
+    }
+
+    public List<Pokemon> getPokemons() {
+        return pokemons;
     }
 }

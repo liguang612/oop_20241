@@ -65,4 +65,10 @@ public class AnimatedPanel extends JPanel implements ActionListener {
             g2d.drawImage(img.getImage(), X, 20, img.getIconWidth(), img.getIconHeight(), this);
         }
     }
+
+    public void setImg(ImageIcon img) {
+        this.img = img;
+        X = 0;
+        repaint();
+    }
 }
