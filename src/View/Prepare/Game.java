@@ -1,4 +1,4 @@
-package View.Game;
+package View.Prepare;
 
 import javax.swing.JFrame;
 

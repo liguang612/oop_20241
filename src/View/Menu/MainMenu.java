@@ -18,7 +18,7 @@ import javax.swing.SpringLayout;
 
 import Data.AppColor;
 import Data.AppConstants;
-import View.Game.Game;
+import View.Prepare.Game;
 import View.Share.RoundPanel;
 
 public class MainMenu extends JPanel {

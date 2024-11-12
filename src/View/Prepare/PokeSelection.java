@@ -1,4 +1,4 @@
-package View.Game;
+package View.Prepare;
 
 import java.awt.Dimension;
 import java.awt.event.FocusAdapter;

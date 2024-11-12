@@ -1,4 +1,4 @@
-package View.Game;
+package View.Prepare;
 
 import java.awt.Color;
 import java.awt.Dimension;
