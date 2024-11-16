@@ -128,6 +128,11 @@ public class PokeDetail extends JPanel {
         idPanel.add(idLabel);
         layout.putConstraint(SpringLayout.WEST, idLabel, 6, SpringLayout.EAST, noLabel);
         layout.putConstraint(SpringLayout.SOUTH, idLabel, -4, SpringLayout.SOUTH, idPanel);
+
+        JLabel buttonS = new JLabel(": to start", AppConstants.IMG_BUTTON_S, JLabel.RIGHT);
+        idPanel.add(buttonS);
+        layout.putConstraint(SpringLayout.SOUTH, buttonS, -4, SpringLayout.SOUTH, idPanel);
+        layout.putConstraint(SpringLayout.WEST, buttonS, idPanel.getWidth() / 2, SpringLayout.WEST, idPanel);
     }
 
     private void initName() {

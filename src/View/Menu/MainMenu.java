@@ -16,9 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import Controller.PrepareController;
 import Data.AppColor;
 import Data.AppConstants;
-import View.Prepare.Game;
 import View.Share.RoundPanel;
 
 public class MainMenu extends JPanel {
@@ -169,7 +169,7 @@ public class MainMenu extends JPanel {
         }
 
         void newGame() {
-            new Game();
+            new PrepareController();
 
             MainMenu.this.parent.setVisible(false);
         }

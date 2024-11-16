@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 
+import Controller.PrepareController;
 import Data.AppColor;
 import Data.AppConstants;
 import Model.PokeType;
@@ -20,24 +21,24 @@ import View.Share.RoundPanel;
 
 @SuppressWarnings("rawtypes")
 
-class Filter extends RoundPanel implements FocusListener, KeyListener {
+public class Filter extends RoundPanel implements FocusListener, KeyListener {
+    private PrepareController controller;
+
     private int mode = 0;
     private JLabel gen, type, caught, unlocks, misc, sort;
     private JPopupMenu popup;
     private ChoiceList caughtList, genList, miscList, sortList, typeList, unlocksList;
-    private PokeSelection parent;
     private RoundPanel mainPanel;
 
-    public Filter(PokeSelection parent) {
+    public Filter(PrepareController controller) {
         super(AppConstants.BORDER_RADIUS, 4, Color.BLACK, AppColor.red01);
-
-        this.parent = parent;
+        this.controller = controller;
 
         setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
         setFocusable(true);
         setLayout(new GridLayout(1, 1));
-        setPreferredSize(new Dimension((int) (parent.getPreferredSize().width),
-                (int) (parent.getPreferredSize().height * 0.105)));
+        setPreferredSize(new Dimension((int) (controller.getPokeSelection().getPreferredSize().width),
+                (int) (controller.getPokeSelection().getPreferredSize().height * 0.105)));
 
         mainPanel = new RoundPanel(AppConstants.BORDER_RADIUS, 0, null, AppColor.blue02);
         mainPanel.setLayout(new GridLayout(1, 6));
@@ -97,22 +98,22 @@ class Filter extends RoundPanel implements FocusListener, KeyListener {
         ((JLabel) mainPanel.getComponent(mode)).setIcon(AppConstants.IMG_CURSOR);
         switch (mode) {
             case 0:
-                parent.hideFilterPopup(genList);
+                controller.hideFilterPopup(genList);
                 break;
             case 1:
-                parent.hideFilterPopup(typeList);
+                controller.hideFilterPopup(typeList);
                 break;
             case 2:
-                parent.hideFilterPopup(caughtList);
+                controller.hideFilterPopup(caughtList);
                 break;
             case 3:
-                parent.hideFilterPopup(unlocksList);
+                controller.hideFilterPopup(unlocksList);
                 break;
             case 4:
-                parent.hideFilterPopup(miscList);
+                controller.hideFilterPopup(miscList);
                 break;
             case 5:
-                parent.hideFilterPopup(sortList);
+                controller.hideFilterPopup(sortList);
                 break;
             default:
                 break;
@@ -141,26 +142,26 @@ class Filter extends RoundPanel implements FocusListener, KeyListener {
             mode %= 6;
             ((JLabel) mainPanel.getComponent(mode)).setIcon(AppConstants.IMG_CURSOR);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            parent.getPokeList().requestFocusInWindow();
+            controller.getPokeList().requestFocusInWindow();
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             switch (mode) {
                 case 0:
-                    parent.showFilterPopup(genList);
+                    controller.showFilterPopup(genList);
                     break;
                 case 1:
-                    parent.showFilterPopup(typeList);
+                    controller.showFilterPopup(typeList);
                     break;
                 case 2:
-                    parent.showFilterPopup(caughtList);
+                    controller.showFilterPopup(caughtList);
                     break;
                 case 3:
-                    parent.showFilterPopup(unlocksList);
+                    controller.showFilterPopup(unlocksList);
                     break;
                 case 4:
-                    parent.showFilterPopup(miscList);
+                    controller.showFilterPopup(miscList);
                     break;
                 case 5:
-                    parent.showFilterPopup(sortList);
+                    controller.showFilterPopup(sortList);
                     break;
                 default:
                     break;

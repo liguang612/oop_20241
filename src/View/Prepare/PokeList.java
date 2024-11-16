@@ -15,22 +15,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import Controller.PrepareController;
 import Data.AppColor;
 import Data.AppConstants;
 import Model.Pokemon;
 import View.Share.AnimatedPanel;
 import View.Share.RoundPanel;
 
-class PokeList extends RoundPanel implements FocusListener, KeyListener {
-    private PokeSelection parent;
+public class PokeList extends RoundPanel implements FocusListener, KeyListener {
+    private PrepareController controller;
 
     private int curX = 0, curY = 0;
     private ImageIcon cursor;
 
-    PokeList(PokeSelection parent) {
+    public PokeList(PrepareController controller) {
         super(AppConstants.BORDER_RADIUS, 8, AppColor.gray01, AppColor.gray02);
-
-        this.parent = parent;
+        this.controller = controller;
 
         setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
         setFocusable(true);
@@ -106,7 +106,7 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             abs -= 8;
             if (abs < 0) {
-                parent.getFilter().requestFocusInWindow();
+                controller.getFilter().requestFocusInWindow();
 
                 return;
             }
@@ -119,14 +119,13 @@ class PokeList extends RoundPanel implements FocusListener, KeyListener {
             PokeLabel pl = ((PokeLabel) comp);
 
             if (pl.switchSelect()) {
-                if (!parent.getPokeSelected().selectPoke(abs))
+                if (!controller.getPokeSelected().selectPoke(abs))
                     pl.switchSelect();
-
             } else
-                parent.getPokeSelected().unselectPoke(abs);
+                controller.getPokeSelected().unselectPoke(abs);
         }
 
-        parent.changePokemon(AppConstants.ALL_OF_POKEMONS.get(curY * 8 + curX));
+        controller.changePokemon(AppConstants.ALL_OF_POKEMONS.get(curY * 8 + curX));
     }
 
     @Override

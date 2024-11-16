@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import Controller.PrepareController;
 import Data.AppColor;
 import Data.AppConstants;
 import Model.Pokemon;
@@ -21,17 +22,19 @@ import View.Share.RoundPanel;
 
 @SuppressWarnings("unused")
 
-class PokeSelected extends JPanel {
+public class PokeSelected extends JPanel {
+    private PrepareController controller;
+
     private JLabel countLabel;
-    private PokeSelection parent;
     private RoundPanel mainSelected, mainTotal, selected, total;
     private SpringLayout layout;
 
     private int count = 0, totalIV = 0;
     private List<Pokemon> pokemons = new ArrayList<>();
 
-    PokeSelected(PokeSelection parent) {
-        this.parent = parent;
+    public PokeSelected(PrepareController controller) {
+        super();
+        this.controller = controller;
 
         setOpaque(false);
         setLayout(layout = new SpringLayout());

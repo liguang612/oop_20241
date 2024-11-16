@@ -164,10 +164,8 @@ public class Settings extends JPanel implements KeyListener {
             tabPanel.add(keyboard);
 
             mainPanel.add(tabPanel, BorderLayout.CENTER);
-            mainPanel.add(new JLabel(new ImageIcon(getClass().getResource("../../assets/img/button_f.png"))),
-                    BorderLayout.WEST);
-            mainPanel.add(new JLabel(new ImageIcon(getClass().getResource("../../assets/img/button_r.jpg"))),
-                    BorderLayout.EAST);
+            mainPanel.add(new JLabel(AppConstants.IMG_BUTTON_F), BorderLayout.WEST);
+            mainPanel.add(new JLabel(AppConstants.IMG_BUTTON_R), BorderLayout.EAST);
 
             add(mainPanel);
         }

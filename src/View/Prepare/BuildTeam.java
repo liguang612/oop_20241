@@ -6,8 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
 
+import Controller.PrepareController;
 import Data.AppConstants;
-import Model.Pokemon;
 
 public class BuildTeam extends JLayeredPane {
     private JPanel mainPanel;
@@ -15,7 +15,7 @@ public class BuildTeam extends JLayeredPane {
     private PokeDetail pokeDetail;
     private PokeSelection pokeSelection;
 
-    public BuildTeam() {
+    public BuildTeam(PrepareController controller) {
         super();
 
         JLabel background = new JLabel(AppConstants.IMG_BACKGROUND1);
@@ -27,13 +27,13 @@ public class BuildTeam extends JLayeredPane {
         mainPanel.setFocusable(true);
         mainPanel.setOpaque(false);
 
-        pokeSelection = new PokeSelection(this);
+        pokeSelection = controller.getPokeSelection();
         mainPanel.add(pokeSelection);
         layout.putConstraint(SpringLayout.NORTH, pokeSelection, 0, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.SOUTH, pokeSelection, 0, SpringLayout.SOUTH, mainPanel);
         layout.putConstraint(SpringLayout.EAST, pokeSelection, 0, SpringLayout.EAST, mainPanel);
 
-        pokeDetail = new PokeDetail(AppConstants.BULBASAUR);
+        pokeDetail = controller.getPokeDetail();
         mainPanel.add(pokeDetail);
         layout.putConstraint(SpringLayout.NORTH, pokeDetail, 8, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.SOUTH, pokeDetail, -150, SpringLayout.SOUTH, mainPanel);
@@ -45,10 +45,6 @@ public class BuildTeam extends JLayeredPane {
         SwingUtilities.invokeLater(() -> {
             pokeSelection.requestFocusInWindow();
         });
-    }
-
-    protected void changePokemon(Pokemon pokemon) {
-        pokeDetail.setPokemon(pokemon);
     }
 
     public void hideFilterPopup(JPanel popup) {

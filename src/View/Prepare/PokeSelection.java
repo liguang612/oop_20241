@@ -7,74 +7,62 @@ import java.awt.event.FocusEvent;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import Controller.PrepareController;
 import Data.AppConstants;
 import Model.Pokemon;
 
 public class PokeSelection extends JPanel {
+    private PrepareController controller;
     private SpringLayout layout;
-    private Filter filter;
-    private BuildTeam parent;
-    private PokeList pokeList;
-    private PokeSelected pokeSelected;
 
-    public PokeSelection(BuildTeam parent) {
+    public PokeSelection(PrepareController controller) {
         super();
-        this.parent = parent;
+        this.controller = controller;
 
         setOpaque(false);
         setPreferredSize(new Dimension((int) (AppConstants.SCREEN_WIDTH * 0.65) - 16, AppConstants.SCREEN_HEIGHT - 8));
 
+        addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                controller.getPokeList().requestFocusInWindow();
+            }
+        });
+    }
+
+    public void init() {
         layout = new SpringLayout();
         setLayout(layout);
 
-        filter = new Filter(this);
+        Filter filter = controller.getFilter();
         add(filter);
         layout.putConstraint(SpringLayout.NORTH, filter, 8, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.WEST, filter, 4, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, filter, -8, SpringLayout.EAST, this);
 
-        pokeSelected = new PokeSelected(this);
+        PokeSelected pokeSelected = controller.getPokeSelected();
         add(pokeSelected);
         layout.putConstraint(SpringLayout.NORTH, pokeSelected, 4, SpringLayout.SOUTH, filter);
         layout.putConstraint(SpringLayout.SOUTH, pokeSelected, -8, SpringLayout.SOUTH, this);
         layout.putConstraint(SpringLayout.EAST, pokeSelected, -8, SpringLayout.EAST, this);
 
-        pokeList = new PokeList(this);
+        PokeList pokeList = controller.getPokeList();
         add(pokeList);
         layout.putConstraint(SpringLayout.NORTH, pokeList, 4, SpringLayout.SOUTH, filter);
         layout.putConstraint(SpringLayout.SOUTH, pokeList, -8, SpringLayout.SOUTH, this);
         layout.putConstraint(SpringLayout.WEST, pokeList, 4, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, pokeList, -8, SpringLayout.WEST, pokeSelected);
-
-        addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                pokeList.requestFocusInWindow();
-            }
-        });
     }
 
-    protected void changePokemon(Pokemon pokemon) {
-        parent.changePokemon(pokemon);
+    void changePokemon(Pokemon pokemon) {
+        controller.changePokemon(pokemon);
     }
 
-    protected void hideFilterPopup(JPanel popup) {
-        parent.hideFilterPopup(popup);
+    void hideFilterPopup(JPanel popup) {
+        controller.hideFilterPopup(popup);
     }
 
-    protected void showFilterPopup(JPanel popup) {
-        parent.showFilterPopup(popup);
-    }
-
-    public Filter getFilter() {
-        return filter;
-    }
-
-    public PokeList getPokeList() {
-        return pokeList;
-    }
-
-    public PokeSelected getPokeSelected() {
-        return pokeSelected;
+    void showFilterPopup(JPanel popup) {
+        controller.showFilterPopup(popup);
     }
 }

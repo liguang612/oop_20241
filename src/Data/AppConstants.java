@@ -26,6 +26,9 @@ public class AppConstants {
         public static final int BORDER_RADIUS = 16;
 
         public static ImageIcon IMG_BACKGROUND1;
+        public static ImageIcon IMG_BUTTON_F;
+        public static ImageIcon IMG_BUTTON_R;
+        public static ImageIcon IMG_BUTTON_S;
         public static ImageIcon IMG_CURSOR;
         public static ImageIcon IMG_CURSOR_SMALL;
         public static ImageIcon IMG_GENDER_FEMALE;
@@ -75,6 +78,9 @@ public class AppConstants {
 
                 // Initialize image
                 IMG_BACKGROUND1 = new ImageIcon(getClass().getResource("../assets/img/game_background.png"));
+                IMG_BUTTON_F = new ImageIcon(getClass().getResource("../assets/img/button_f.png"));
+                IMG_BUTTON_R = new ImageIcon(getClass().getResource("../assets/img/button_r.png"));
+                IMG_BUTTON_S = new ImageIcon(getClass().getResource("../assets/img/button_s.png"));
                 IMG_CURSOR = new ImageIcon(getClass().getResource("../assets/img/cursor.png"));
                 IMG_CURSOR_SMALL = new ImageIcon(getClass().getResource("../assets/img/cursor_small.png"));
                 IMG_GENDER_MALE = new ImageIcon(getClass().getResource("../assets/img/male.png"));
@@ -305,7 +311,7 @@ public class AppConstants {
                 return QUAXLY = new Pokemon("Torrent",
                                 new Animation(getClass().getResource("../assets/animation/quaxly.png").getPath(),
                                                 getClass().getResource("../assets/animation/quaxly.json").getPath()),
-                                new ImageIcon(getClass().getResource("../assets/icon/charmander.png")), 100, 912, 4,
+                                new ImageIcon(getClass().getResource("../assets/icon/quaxly.png")), 100, 912, 4,
                                 "Quaxly",
                                 "Bashful (-)", skills, types);
         }
