@@ -43,6 +43,11 @@ public class PrepareController {
         pokeDetail.setPokemon(pokemon);
     }
 
+    public void goToGame() {
+        prepare.setVisible(false);
+        new GameController();
+    }
+
     public void hideFilterPopup(JPanel popup) {
         buildTeam.hideFilterPopup(popup);
     }

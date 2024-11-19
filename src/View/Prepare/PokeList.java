@@ -123,6 +123,8 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
                     pl.switchSelect();
             } else
                 controller.getPokeSelected().unselectPoke(abs);
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
+            controller.goToGame();
         }
 
         controller.changePokemon(AppConstants.ALL_OF_POKEMONS.get(curY * 8 + curX));

@@ -17,10 +17,14 @@ public class Game extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setSize(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
+        this.setContentPane(layers);
         this.setLocationRelativeTo(null);
 
-        layers.add(new Background(), JLayeredPane.DEFAULT_LAYER);
-        this.setLayeredPane(layers);
+        layers.setSize(this.getSize());
+
+        Background bg = new Background();
+        bg.setSize(layers.getSize());
+        layers.add(bg, JLayeredPane.DEFAULT_LAYER);
 
         this.setVisible(true);
     }
