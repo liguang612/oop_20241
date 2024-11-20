@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import Data.AppConstants;
 import Model.Pokemon;
+import View.Menu.Menu;
 import View.Prepare.BuildTeam;
 import View.Prepare.Filter;
 import View.Prepare.PokeDetail;
@@ -37,6 +38,11 @@ public class PrepareController {
         buildTeam = new BuildTeam(this);
         buildTeam.requestFocusInWindow();
         prepare.setLayeredPane(buildTeam);
+    }
+
+    public void backToMenu() {
+        new Menu();
+        prepare.setVisible(false);
     }
 
     public void changePokemon(Pokemon pokemon) {

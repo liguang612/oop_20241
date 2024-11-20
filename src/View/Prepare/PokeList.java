@@ -125,6 +125,8 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
                 controller.getPokeSelected().unselectPoke(abs);
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
             controller.goToGame();
+        } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            controller.backToMenu();
         }
 
         controller.changePokemon(AppConstants.ALL_OF_POKEMONS.get(curY * 8 + curX));
