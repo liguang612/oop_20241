@@ -16,23 +16,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import Controller.MenuController;
 import Controller.PrepareController;
 import Data.AppColor;
 import Data.AppConstants;
 import View.Share.RoundPanel;
 
 public class MainMenu extends JPanel {
+    private MenuController controller;
+
     private ControlPanel controlPanel;
     private Image logo;
     private Settings settingsPanel;
     private SpringLayout layout;
 
-    private Menu parent;
-
-    public MainMenu(Menu parent) {
+    public MainMenu(MenuController controller) {
         super();
-
-        this.parent = parent;
+        this.controller = controller;
 
         logo = new ImageIcon(getClass().getResource("../../assets/img/logo.jpg")).getImage();
 
@@ -41,7 +41,7 @@ public class MainMenu extends JPanel {
         controlPanel = new ControlPanel();
         add(controlPanel);
 
-        settingsPanel = new Settings();
+        settingsPanel = controller.getSettings();
 
         layout.putConstraint(SpringLayout.EAST, controlPanel, -10, SpringLayout.EAST, this);
         layout.putConstraint(SpringLayout.SOUTH, controlPanel, -10, SpringLayout.SOUTH, this);
@@ -171,7 +171,7 @@ public class MainMenu extends JPanel {
         void newGame() {
             new PrepareController();
 
-            MainMenu.this.parent.setVisible(false);
+            controller.getMenu().setVisible(false);
         }
 
         void settings() {

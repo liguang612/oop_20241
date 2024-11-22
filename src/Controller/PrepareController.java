@@ -41,7 +41,7 @@ public class PrepareController {
     }
 
     public void backToMenu() {
-        new Menu();
+        new MenuController();
         prepare.setVisible(false);
     }
 

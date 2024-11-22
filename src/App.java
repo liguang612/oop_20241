@@ -3,8 +3,8 @@ import java.awt.Font;
 
 import javax.swing.UIManager;
 
+import Controller.MenuController;
 import Data.AppConstants;
-import View.Menu.Menu;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -16,6 +16,6 @@ public class App {
         UIManager.put("RadioButton.font", new Font("Consolas", Font.PLAIN, 32));
         UIManager.put("RadioButton.foreground", Color.WHITE);
 
-        new Menu();
+        new MenuController();
     }
 }

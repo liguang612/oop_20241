@@ -15,11 +15,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import Controller.MenuController;
 import Data.AppColor;
 import Data.AppConstants;
 import View.Share.RoundPanel;
 
 public class Settings extends JPanel implements KeyListener {
+    private MenuController controller;
+
     private NavigationBar navigationBar;
     private General general;
     private Display display;
@@ -27,8 +30,9 @@ public class Settings extends JPanel implements KeyListener {
     private Gamepad gamepad;
     private Keyboard keyboard;
 
-    public Settings() {
+    public Settings(MenuController controller) {
         super();
+        this.controller = controller;
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
         setLayout(new BorderLayout());
