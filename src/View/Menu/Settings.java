@@ -21,8 +21,6 @@ import Data.AppConstants;
 import View.Share.RoundPanel;
 
 public class Settings extends JPanel implements KeyListener {
-    private MenuController controller;
-
     private NavigationBar navigationBar;
     private General general;
     private Display display;
@@ -32,7 +30,6 @@ public class Settings extends JPanel implements KeyListener {
 
     public Settings(MenuController controller) {
         super();
-        this.controller = controller;
 
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
         setLayout(new BorderLayout());

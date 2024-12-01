@@ -2,18 +2,21 @@ package View.Game;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import Data.AppColor;
+import Controller.GameController;
 import Data.AppConstants;
 
 public class Game extends JFrame {
     private JLayeredPane layers = new JLayeredPane();
 
-    public Game() {
+    public Game(GameController controller) {
+        super();
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setSize(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
@@ -30,22 +33,14 @@ public class Game extends JFrame {
     }
 
     private class Background extends JPanel {
-        private Background() {
-            setOpaque(false);
-        }
-
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            Image background = AppConstants.IMG_GAME_BACKGROUND.getImage();
+
             Graphics2D g2d = (Graphics2D) g;
-
-            g2d.setColor(AppColor.blue01);
-            g2d.fillRect(0, 0, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT / 3);
-
-            g2d.setColor(AppColor.green01);
-            g2d.fillRect(0, AppConstants.SCREEN_HEIGHT / 3, AppConstants.SCREEN_WIDTH,
-                    AppConstants.SCREEN_HEIGHT * 2 / 3);
+            g2d.drawImage(background, 0, 0, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT, this);
         }
     }
 }

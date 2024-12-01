@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -26,15 +25,12 @@ public class MainMenu extends JPanel {
     private MenuController controller;
 
     private ControlPanel controlPanel;
-    private Image logo;
     private Settings settingsPanel;
     private SpringLayout layout;
 
     public MainMenu(MenuController controller) {
         super();
         this.controller = controller;
-
-        logo = new ImageIcon(getClass().getResource("../../assets/img/logo.jpg")).getImage();
 
         setLayout(layout = new SpringLayout());
 
@@ -51,14 +47,10 @@ public class MainMenu extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Image background = AppConstants.IMG_GAME_BACKGROUND.getImage(), logo = AppConstants.IMG_LOGO.getImage();
+
         Graphics2D g2d = (Graphics2D) g;
-
-        g2d.setColor(AppColor.blue01);
-        g2d.fillRect(0, 0, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT / 3);
-
-        g2d.setColor(AppColor.green01);
-        g2d.fillRect(0, AppConstants.SCREEN_HEIGHT / 3, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT * 2 / 3);
-
+        g2d.drawImage(background, 0, 0, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT, this);
         g2d.drawImage(logo, AppConstants.SCREEN_WIDTH / 2 - logo.getWidth(this) / 2, 0, this);
     }
 

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
@@ -13,6 +14,7 @@ import Model.Animation;
 import Model.PokeType;
 import Model.Pokemon;
 import Model.Skill;
+import Utils.Pair;
 
 public class AppConstants {
         public static Font FONT_AGENCYFB;
@@ -31,8 +33,10 @@ public class AppConstants {
         public static ImageIcon IMG_BUTTON_S;
         public static ImageIcon IMG_CURSOR;
         public static ImageIcon IMG_CURSOR_SMALL;
+        public static ImageIcon IMG_GAME_BACKGROUND;
         public static ImageIcon IMG_GENDER_FEMALE;
         public static ImageIcon IMG_GENDER_MALE;
+        public static ImageIcon IMG_LOGO;
         public static ImageIcon IMG_SELECT_CURSOR;
         public static ImageIcon IMG_SELECT_CURSOR_HIGHLIGHT;
         public static ImageIcon IMG_UNKNOWN_POKE;
@@ -77,13 +81,15 @@ public class AppConstants {
                 pixel();
 
                 // Initialize image
-                IMG_BACKGROUND1 = new ImageIcon(getClass().getResource("../assets/img/game_background.png"));
+                IMG_BACKGROUND1 = new ImageIcon(getClass().getResource("../assets/img/prepare_background.png"));
                 IMG_BUTTON_F = new ImageIcon(getClass().getResource("../assets/img/button_f.png"));
                 IMG_BUTTON_R = new ImageIcon(getClass().getResource("../assets/img/button_r.png"));
                 IMG_BUTTON_S = new ImageIcon(getClass().getResource("../assets/img/button_s.png"));
                 IMG_CURSOR = new ImageIcon(getClass().getResource("../assets/img/cursor.png"));
                 IMG_CURSOR_SMALL = new ImageIcon(getClass().getResource("../assets/img/cursor_small.png"));
                 IMG_GENDER_MALE = new ImageIcon(getClass().getResource("../assets/img/male.png"));
+                IMG_GAME_BACKGROUND = new ImageIcon(getClass().getResource("../assets/img/game_background.png"));
+                IMG_LOGO = new ImageIcon(getClass().getResource("../assets/img/logo.png"));
                 IMG_SELECT_CURSOR = new ImageIcon(getClass().getResource("../assets/img/select_cursor.png"));
                 IMG_SELECT_CURSOR_HIGHLIGHT = new ImageIcon(
                                 getClass().getResource("../assets/img/select_cursor_highlight.png"));
@@ -120,6 +126,17 @@ public class AppConstants {
                 ALL_OF_POKEMONS.add(sprigatito());
                 ALL_OF_POKEMONS.add(fuecoco());
                 ALL_OF_POKEMONS.add(quaxly());
+        }
+
+        // GROUND
+        public static Pair<ImageIcon, ImageIcon> getRandomGround() {
+                Random random = new Random();
+
+                int n = random.nextInt(3) + 1;
+
+                return new Pair<ImageIcon, ImageIcon>(
+                                new ImageIcon(AppConstants.class.getResource("../assets/ground/" + n + "a.png")),
+                                new ImageIcon(AppConstants.class.getResource("../assets/ground/" + n + "b.png")));
         }
 
         // POKEMON
@@ -509,4 +526,5 @@ public class AppConstants {
                         e.printStackTrace();
                 }
         }
+
 }

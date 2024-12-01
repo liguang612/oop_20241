@@ -6,11 +6,7 @@ import Controller.MenuController;
 import Data.AppConstants;
 
 public class Menu extends JFrame {
-    private MenuController controller;
-
     public Menu(MenuController controller) {
-        this.controller = controller;
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setSize(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
