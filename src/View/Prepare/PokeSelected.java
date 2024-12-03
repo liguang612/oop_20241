@@ -29,7 +29,7 @@ public class PokeSelected extends JPanel {
     private RoundPanel mainSelected, mainTotal, selected, total;
     private SpringLayout layout;
 
-    private int count = 0, totalIV = 0;
+    private int count = 0;
     private List<Pokemon> pokemons = new ArrayList<>();
 
     public PokeSelected(PrepareController controller) {
@@ -75,7 +75,7 @@ public class PokeSelected extends JPanel {
         mainTotal.setLayout(new BoxLayout(mainTotal, BoxLayout.Y_AXIS));
         total.add(mainTotal);
 
-        countLabel = new JLabel("" + totalIV + "/10", JLabel.CENTER);
+        countLabel = new JLabel("" + controller.getTotalIVs() + "/10", JLabel.CENTER);
 
         Box box = Box.createVerticalBox();
         box.setAlignmentX(Box.CENTER_ALIGNMENT);
@@ -86,26 +86,18 @@ public class PokeSelected extends JPanel {
         mainTotal.add(box);
     }
 
-    protected boolean selectPoke(int index) {
-        Pokemon pokemon = AppConstants.ALL_OF_POKEMONS.get(index);
-        if (pokemon.getIVs() + totalIV > 10)
-            return false;
-
+    public void selectPoke(Pokemon pokemon) {
         ((AnimatedPanel) mainSelected.getComponent(pokemons.size())).setImg(pokemon.getAvatar());
 
-        totalIV += pokemon.getIVs();
-        countLabel.setText("" + totalIV + "/10");
+        countLabel.setText("" + controller.getTotalIVs() + "/10");
 
         pokemons.add(pokemon);
 
         mainSelected.revalidate();
         mainSelected.repaint();
-
-        return true;
     }
 
-    protected void unselectPoke(int index) {
-        Pokemon pokemon = AppConstants.ALL_OF_POKEMONS.get(index);
+    public void unselectPoke(Pokemon pokemon) {
         int idx = pokemons.indexOf(pokemon);
 
         AnimatedPanel ap = ((AnimatedPanel) mainSelected.getComponent(idx));
@@ -114,14 +106,9 @@ public class PokeSelected extends JPanel {
         mainSelected.remove(idx);
         mainSelected.add(ap);
 
-        totalIV -= pokemon.getIVs();
-        countLabel.setText("" + totalIV + "/10");
+        countLabel.setText("" + controller.getTotalIVs() + "/10");
 
         pokemons.remove(idx);
-    }
-
-    public int getTotalIV() {
-        return totalIV;
     }
 
     public List<Pokemon> getPokemons() {

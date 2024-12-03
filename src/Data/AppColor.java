@@ -15,11 +15,13 @@ public class AppColor {
 
     public static final Color green01 = new Color(0x68B07A);
 
-    public static final Color yellow01 = new Color(0xF9B050);
-
     public static final Color red01 = new Color(0xC73625);
     public static final Color red02 = new Color(0xF83018);
 
+    public static final Color transparent01 = new Color(255, 255, 255, 50);
+
     public static final Color white = Color.WHITE;
     public static final Color white01 = new Color(240, 248, 248);
+
+    public static final Color yellow01 = new Color(0xF9B050);
 }

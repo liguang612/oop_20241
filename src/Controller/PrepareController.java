@@ -21,6 +21,8 @@ public class PrepareController {
     private PokeSelected pokeSelected;
     private Prepare prepare;
 
+    private int totalIVs = 0;
+
     public PrepareController() {
         prepare = new Prepare();
         prepare.setController(this);
@@ -37,6 +39,28 @@ public class PrepareController {
         buildTeam = new BuildTeam(this);
         buildTeam.requestFocusInWindow();
         prepare.setLayeredPane(buildTeam);
+    }
+
+    public boolean checkEnable(Pokemon pokemon) {
+        return totalIVs + pokemon.getIVs() <= 10;
+    }
+
+    public boolean selectPoke(int index) {
+        Pokemon pokemon = AppConstants.ALL_OF_POKEMONS.get(index);
+        if (pokemon.getIVs() + totalIVs > 10)
+            return false;
+
+        totalIVs += pokemon.getIVs();
+        pokeSelected.selectPoke(pokemon);
+
+        return true;
+    }
+
+    public void unselectPoke(int index) {
+        Pokemon pokemon = AppConstants.ALL_OF_POKEMONS.get(index);
+
+        totalIVs -= pokemon.getIVs();
+        pokeSelected.unselectPoke(pokemon);
     }
 
     public void backToMenu() {
@@ -87,5 +111,9 @@ public class PrepareController {
 
     public Prepare getPrepare() {
         return prepare;
+    }
+
+    public int getTotalIVs() {
+        return totalIVs;
     }
 }

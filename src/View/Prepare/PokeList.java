@@ -34,7 +34,7 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
         setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
         setFocusable(true);
-        setLayout(new GridLayout(0, 8, 10, 0));
+        setLayout(new GridLayout(0, 8, 10, 10));
 
         for (Pokemon pokemon : AppConstants.ALL_OF_POKEMONS) {
             add(new PokeLabel(pokemon));
@@ -42,6 +42,17 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
         addFocusListener(this);
         addKeyListener(this);
+    }
+
+    void resetEnable() {
+        for (int i = 0; i < AppConstants.ALL_OF_POKEMONS.size(); i++) {
+            PokeLabel pl = (PokeLabel) getComponent(i);
+            if (!controller.checkEnable(AppConstants.ALL_OF_POKEMONS.get(i))) {
+                pl.setEnabled(false);
+            } else {
+                pl.setEnabled(true);
+            }
+        }
     }
 
     @Override
@@ -71,7 +82,7 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
         int abs = curY * 8 + curX;
         Component comp = getComponent(curY * 8 + curX);
 
-        // Stop animation in old item, start will be in painComponent
+        // Stop animation in old item, start will be in paintComponent
         if (comp instanceof PokeLabel) {
             ((PokeLabel) comp).stop();
         }
@@ -119,10 +130,12 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
             PokeLabel pl = ((PokeLabel) comp);
 
             if (pl.switchSelect()) {
-                if (!controller.getPokeSelected().selectPoke(abs))
+                if (!controller.selectPoke(abs))
                     pl.switchSelect();
             } else
-                controller.getPokeSelected().unselectPoke(abs);
+                controller.unselectPoke(abs);
+
+            resetEnable();
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
             controller.goToGame();
         } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -154,7 +167,7 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
     class PokeLabel extends JPanel {
         AnimatedPanel anmPanel;
-        boolean isSelected;
+        boolean isEnabled = true, isSelected;
 
         PokeLabel(Pokemon pokemon) {
             super();
@@ -188,6 +201,21 @@ public class PokeList extends RoundPanel implements FocusListener, KeyListener {
 
                 g2d.drawImage(AppConstants.IMG_SELECT_CURSOR_HIGHLIGHT.getImage(), 0, 0, getWidth(), getHeight(), null);
             }
+            if (!isEnabled && !isSelected) {
+                Graphics2D g2d = (Graphics2D) g;
+
+                g2d.setColor(AppColor.transparent01);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        }
+
+        @Override
+        public void setEnabled(boolean enabled) {
+            super.setEnabled(enabled);
+
+            isEnabled = enabled;
+            revalidate();
+            repaint();
         }
 
         boolean switchSelect() {
