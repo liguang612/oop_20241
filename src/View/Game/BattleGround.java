@@ -14,11 +14,13 @@ import javax.swing.Timer;
 import Controller.GameController;
 import Data.AppConstants;
 import Utils.Pair;
+import View.Share.SpriteAnimation;
 
 public class BattleGround extends JPanel implements ActionListener {
     private SpringLayout layout;
 
     private JLabel eGround, pGround, trainer;
+    private SpriteAnimation ally, enemy;
 
     private Timer timer;
     private int posX = 0;
@@ -26,12 +28,18 @@ public class BattleGround extends JPanel implements ActionListener {
     public BattleGround(GameController controller) {
         super();
 
-        setLayout(layout = new SpringLayout());
+        setLayout(layout = controller.getLayout());
         setOpaque(false);
 
         trainer = new JLabel(AppConstants.IMG_TRAINER_MALE);
         add(trainer);
         layout.putConstraint(SpringLayout.NORTH, trainer, AppConstants.SCREEN_HEIGHT * 2 / 5, SpringLayout.NORTH, this);
+
+        ally = controller.getAlly().getAnimationFromBack();
+        add(ally);
+
+        enemy = controller.getEnemy().getAnimation();
+        add(enemy);
 
         Pair<ImageIcon, ImageIcon> grounds = AppConstants.getRandomGround();
         eGround = new JLabel();
@@ -66,6 +74,24 @@ public class BattleGround extends JPanel implements ActionListener {
             eGround.setIcon(new ImageIcon(eii));
             pGround.setIcon(new ImageIcon(pii));
             trainer.setIcon(new ImageIcon(trii));
+
+            layout.putConstraint(
+                    SpringLayout.NORTH, enemy,
+                    eGround.getHeight() * 65 / 132 - enemy.getHeight() / 2,
+                    SpringLayout.NORTH, eGround);
+            layout.putConstraint(
+                    SpringLayout.WEST, enemy,
+                    eGround.getWidth() * 217 / 320 - enemy.getWidth() / 2,
+                    SpringLayout.WEST, eGround);
+
+            layout.putConstraint(
+                    SpringLayout.WEST, ally,
+                    pGround.getWidth() * 110 / 320 - ally.getWidth() / 2,
+                    SpringLayout.WEST, pGround);
+            layout.putConstraint(
+                    SpringLayout.SOUTH, ally,
+                    0,
+                    SpringLayout.SOUTH, pGround);
         });
     }
 
@@ -73,14 +99,17 @@ public class BattleGround extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         int pWidth = AppConstants.SCREEN_WIDTH;
 
-        layout.putConstraint(SpringLayout.WEST, eGround, posX - pWidth, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.WEST, pGround, pWidth - posX, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.WEST, eGround, pWidth - posX, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.WEST, pGround, posX - pWidth, SpringLayout.WEST, this);
 
         revalidate();
         repaint();
 
-        if (posX >= pWidth)
+        if (posX >= pWidth) {
             timer.stop();
+            ally.startAnimation();
+            enemy.startAnimation();
+        }
 
         posX += 20;
         if (posX >= pWidth)

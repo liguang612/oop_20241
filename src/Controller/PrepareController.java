@@ -73,8 +73,8 @@ public class PrepareController {
     }
 
     public void goToGame() {
+        new GameController(pokeSelected.getPokemons());
         prepare.setVisible(false);
-        new GameController();
     }
 
     public void hideFilterPopup(JPanel popup) {

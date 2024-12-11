@@ -17,7 +17,7 @@ public class Story extends RoundPanel {
     public Story(GameController controller) {
         super(AppConstants.BORDER_RADIUS, 4, Color.BLACK, AppColor.red01);
 
-        SpringLayout layout = new SpringLayout();
+        SpringLayout layout = controller.getLayout();
         setLayout(layout);
 
         mainPanel = new RoundPanel(AppConstants.BORDER_RADIUS, 0, null, AppColor.blue02);
