@@ -43,6 +43,7 @@ public class GameController {
         battle = new BattleLayer(this);
 
         addGameLayer(battle);
+        sendMessage(ally.getName() + " .vs " + enemy.getName());
     }
 
     public void addGameLayer(Component comp) {
@@ -54,6 +55,10 @@ public class GameController {
 
         ally = ourPokemons.get(rand.nextInt(ourPokemons.size()));
         enemy = AppConstants.ALL_OF_POKEMONS.get(rand.nextInt(AppConstants.ALL_OF_POKEMONS.size()));
+    }
+
+    private void sendMessage(String message) {
+        story.receiveMsg(message);
     }
 
     public Game getGame() {

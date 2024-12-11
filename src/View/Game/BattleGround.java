@@ -79,15 +79,14 @@ public class BattleGround extends JPanel implements ActionListener {
                     SpringLayout.NORTH, enemy,
                     eGround.getHeight() * 65 / 132 - enemy.getHeight() / 2,
                     SpringLayout.NORTH, eGround);
-            layout.putConstraint(
-                    SpringLayout.WEST, enemy,
+            layout.putConstraint(SpringLayout.WEST, enemy,
                     eGround.getWidth() * 217 / 320 - enemy.getWidth() / 2,
-                    SpringLayout.WEST, eGround);
+                    SpringLayout.WEST, pGround);
 
             layout.putConstraint(
                     SpringLayout.WEST, ally,
                     pGround.getWidth() * 110 / 320 - ally.getWidth() / 2,
-                    SpringLayout.WEST, pGround);
+                    SpringLayout.WEST, eGround);
             layout.putConstraint(
                     SpringLayout.SOUTH, ally,
                     0,
