@@ -39,6 +39,7 @@ public class AppConstants {
         public static ImageIcon IMG_LOGO;
         public static ImageIcon IMG_SELECT_CURSOR;
         public static ImageIcon IMG_SELECT_CURSOR_HIGHLIGHT;
+        public static ImageIcon IMG_TRAINER_MALE;
         public static ImageIcon IMG_UNKNOWN_POKE;
 
         public static Pokemon BULBASAUR;
@@ -93,6 +94,7 @@ public class AppConstants {
                 IMG_SELECT_CURSOR = new ImageIcon(getClass().getResource("../assets/img/select_cursor.png"));
                 IMG_SELECT_CURSOR_HIGHLIGHT = new ImageIcon(
                                 getClass().getResource("../assets/img/select_cursor_highlight.png"));
+                IMG_TRAINER_MALE = new ImageIcon(getClass().getResource("../assets/trainer/trainer_male.png"));
                 IMG_UNKNOWN_POKE = new ImageIcon(
                                 getClass().getResource("../assets/img/unknown_poke.png"));
 

@@ -22,8 +22,8 @@ public class GameController {
     public GameController() {
         game = new Game(this);
 
-        ground = new BattleGround(this);
         story = new Story(this);
+        ground = new BattleGround(this);
         battle = new BattleLayer(this);
 
         addGameLayer(battle);
