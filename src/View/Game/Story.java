@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -13,9 +15,11 @@ import javax.swing.Timer;
 import Controller.GameController;
 import Data.AppColor;
 import Data.AppConstants;
+import Data.AppConstants.GameState;
 import View.Share.RoundPanel;
 
-public class Story extends RoundPanel implements ActionListener {
+public class Story extends RoundPanel implements ActionListener, KeyListener {
+    private GameController controller;
     private RoundPanel mainPanel;
 
     private JLabel msgLabel;
@@ -26,8 +30,10 @@ public class Story extends RoundPanel implements ActionListener {
 
     public Story(GameController controller) {
         super(AppConstants.BORDER_RADIUS, 4, Color.BLACK, AppColor.red01);
+        this.controller = controller;
 
         SpringLayout layout = controller.getLayout();
+        setFocusable(true);
         setLayout(layout);
 
         mainPanel = new RoundPanel(AppConstants.BORDER_RADIUS, 0, null, AppColor.blue02);
@@ -43,7 +49,11 @@ public class Story extends RoundPanel implements ActionListener {
         msgLabel = new JLabel();
         mainPanel.add(msgLabel);
 
-        timer = new Timer(75, this);
+        timer = new Timer(60, this);
+
+        // SwingUtilities.invokeLater(() -> {
+        // requestFocusInWindow();
+        // });
     }
 
     @Override
@@ -53,6 +63,7 @@ public class Story extends RoundPanel implements ActionListener {
             idx++;
         } else {
             timer.stop();
+            addKeyListener(this);
         }
     }
 
@@ -61,6 +72,33 @@ public class Story extends RoundPanel implements ActionListener {
         msgLabel.setText("");
         idx = 0;
 
+        removeKeyListener(this);
         timer.start();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Define next state
+        GameState nextState = controller.getState();
+        switch (controller.getState()) {
+            case init:
+                nextState = GameState.prepare;
+                break;
+            default:
+                break;
+        }
+
+        // Key event handler
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            controller.sendMessage(nextState);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

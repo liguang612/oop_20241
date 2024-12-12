@@ -61,6 +61,11 @@ public class PrepareController {
 
         totalIVs -= pokemon.getIVs();
         pokeSelected.unselectPoke(pokemon);
+
+        if (pokeSelected.getPokemons().size() > 0)
+            pokeDetail.getButtonS().setVisible(true);
+        else
+            pokeDetail.getButtonS().setVisible(false);
     }
 
     public void backToMenu() {
@@ -73,6 +78,10 @@ public class PrepareController {
     }
 
     public void goToGame() {
+        if (pokeSelected.getPokemons().size() == 0) {
+            return;
+        }
+
         new GameController(pokeSelected.getPokemons());
         prepare.setVisible(false);
     }

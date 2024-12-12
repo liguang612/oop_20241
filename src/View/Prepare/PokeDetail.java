@@ -29,7 +29,7 @@ import View.Share.SpriteAnimation;
 
 public class PokeDetail extends JPanel {
     private Column skillColumn;
-    private JLabel abilityLabel, genderLabel, idLabel, nameLabel, natureLabel;
+    private JLabel abilityLabel, genderLabel, idLabel, nameLabel, natureLabel, buttonS;
     private JPanel idPanel, inforPanel, namePanel, statPanel;
     private Pokemon pokemon;
     private Row typeRow;
@@ -129,7 +129,8 @@ public class PokeDetail extends JPanel {
         layout.putConstraint(SpringLayout.WEST, idLabel, 6, SpringLayout.EAST, noLabel);
         layout.putConstraint(SpringLayout.SOUTH, idLabel, -4, SpringLayout.SOUTH, idPanel);
 
-        JLabel buttonS = new JLabel(": to start", AppConstants.IMG_BUTTON_S, JLabel.RIGHT);
+        buttonS = new JLabel(": to start", AppConstants.IMG_BUTTON_S, JLabel.RIGHT);
+        buttonS.setVisible(false); // At first, there hasn't been any pokemon selected yet.
         idPanel.add(buttonS);
         layout.putConstraint(SpringLayout.SOUTH, buttonS, -4, SpringLayout.SOUTH, idPanel);
         layout.putConstraint(SpringLayout.WEST, buttonS, idPanel.getWidth() / 2, SpringLayout.WEST, idPanel);
@@ -268,9 +269,8 @@ public class PokeDetail extends JPanel {
         });
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public JLabel getButtonS() {
+        return buttonS;
     }
 
     class TypeLabel extends JLabel {

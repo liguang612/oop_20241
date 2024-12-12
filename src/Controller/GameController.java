@@ -8,6 +8,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.SpringLayout;
 
 import Data.AppConstants;
+import Data.AppConstants.GameState;
 import Model.Pokemon;
 import View.Game.BattleGround;
 import View.Game.BattleLayer;
@@ -31,6 +32,9 @@ public class GameController {
     // LAYOUT
     private SpringLayout layout = new SpringLayout();
 
+    // PROGRESS
+    private GameState state;
+
     public GameController(List<Pokemon> pokemons) {
         ourPokemons = pokemons;
 
@@ -43,7 +47,6 @@ public class GameController {
         battle = new BattleLayer(this);
 
         addGameLayer(battle);
-        sendMessage(ally.getName() + " .vs " + enemy.getName());
     }
 
     public void addGameLayer(Component comp) {
@@ -57,8 +60,20 @@ public class GameController {
         enemy = AppConstants.ALL_OF_POKEMONS.get(rand.nextInt(AppConstants.ALL_OF_POKEMONS.size()));
     }
 
-    private void sendMessage(String message) {
-        story.receiveMsg(message);
+    public void sendMessage(GameState state) {
+        this.state = state;
+        story.receiveMsg(genMessage(state));
+    }
+
+    private String genMessage(GameState state) {
+        switch (state) {
+            case init:
+                return ally.getName() + " .vs " + enemy.getName();
+            case prepare:
+                return "What will " + ally.getName() + " do?";
+            default:
+                return "";
+        }
     }
 
     public Game getGame() {
@@ -95,5 +110,9 @@ public class GameController {
 
     public SpringLayout getLayout() {
         return layout;
+    }
+
+    public GameState getState() {
+        return state;
     }
 }

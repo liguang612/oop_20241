@@ -1,5 +1,8 @@
 package View.Game;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
@@ -12,6 +15,7 @@ public class BattleLayer extends JPanel {
     public BattleLayer(GameController controller) {
         super();
 
+        setFocusable(true);
         setLayout(layout);
         setOpaque(false);
         setSize(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
@@ -29,6 +33,13 @@ public class BattleLayer extends JPanel {
         layout.putConstraint(SpringLayout.SOUTH, ground, 0, SpringLayout.NORTH, story);
         layout.putConstraint(SpringLayout.WEST, ground, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, ground, 0, SpringLayout.EAST, this);
+
+        addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                controller.getStory().requestFocusInWindow();
+            }
+        });
 
         revalidate();
         repaint();

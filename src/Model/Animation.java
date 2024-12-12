@@ -13,9 +13,6 @@ public class Animation {
         this.spritePath = spritePath;
         this.jsonPath = jsonPath;
 
-        if (!spritePath.endsWith("bulbasaur.png")) {
-            return;
-        }
         spritePathBack = spritePath.substring(0, spritePath.length() - 4);
         spritePathBack += "_back.png";
 
