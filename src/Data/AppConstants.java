@@ -132,10 +132,11 @@ public class AppConstants {
 
 	public enum GameState {
 		init,
-		prepare,
+		action,
+		skills, change, run,
 		attack, isAttacked,
-		failed,
-		run
+		success, failed,
+		win, lose
 	}
 
 	// GROUND

@@ -2,6 +2,7 @@ package View.Game;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -50,10 +51,6 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
         mainPanel.add(msgLabel);
 
         timer = new Timer(60, this);
-
-        // SwingUtilities.invokeLater(() -> {
-        // requestFocusInWindow();
-        // });
     }
 
     @Override
@@ -82,23 +79,29 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // Define next state
-        GameState nextState = controller.getState();
-        switch (controller.getState()) {
-            case init:
-                nextState = GameState.prepare;
-                break;
-            default:
-                break;
-        }
+        // Get next state
+        GameState nextState = controller.next();
 
         // Key event handler
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             controller.sendMessage(nextState);
+        } else if (e.getKeyCode() == KeyEvent.VK_1) {
+            if (nextState != GameState.action)
+                return;
+            controller.sendMessage(GameState.skills);
+        } else if (e.getKeyCode() == KeyEvent.VK_2) {
+            if (controller.getState() != GameState.action)
+                return;
+            controller.sendMessage(GameState.run);
+        } else if (e.getKeyCode() == KeyEvent.VK_3) {
+            if (controller.getState() != GameState.action)
+                return;
+            controller.sendMessage(GameState.change);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
 }

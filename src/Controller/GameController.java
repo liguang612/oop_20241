@@ -13,6 +13,7 @@ import Model.Pokemon;
 import View.Game.BattleGround;
 import View.Game.BattleLayer;
 import View.Game.Game;
+import View.Game.PlayerAction;
 import View.Game.Story;
 
 public class GameController {
@@ -22,6 +23,7 @@ public class GameController {
     private BattleLayer battle;
     private BattleGround ground;
     private Story story;
+    private PlayerAction playerActions;
 
     private Integer gameLayerLevel = JLayeredPane.DEFAULT_LAYER;
 
@@ -36,19 +38,30 @@ public class GameController {
     private GameState state;
 
     public GameController(List<Pokemon> pokemons) {
+        // Data
         ourPokemons = pokemons;
 
+        // UI
         game = new Game(this);
 
         initMatch();
 
         story = new Story(this);
+
         ground = new BattleGround(this);
+
+        playerActions = new PlayerAction();
+        playerActions.setVisible(false);
+
         battle = new BattleLayer(this);
 
         addGameLayer(battle);
+
+        // State
+        state = GameState.init;
     }
 
+    // UI
     public void addGameLayer(Component comp) {
         ((JLayeredPane) game.getContentPane()).add(comp, gameLayerLevel += 100);
     }
@@ -60,6 +73,7 @@ public class GameController {
         enemy = AppConstants.ALL_OF_POKEMONS.get(rand.nextInt(AppConstants.ALL_OF_POKEMONS.size()));
     }
 
+    // MESSAGE
     public void sendMessage(GameState state) {
         this.state = state;
         story.receiveMsg(genMessage(state));
@@ -69,11 +83,28 @@ public class GameController {
         switch (state) {
             case init:
                 return ally.getName() + " .vs " + enemy.getName();
-            case prepare:
+            case action:
+                playerActions.setVisible(true);
                 return "What will " + ally.getName() + " do?";
             default:
                 return "";
         }
+    }
+
+    // STATE
+    public GameState next() {
+        switch (state) {
+            case init:
+                sendMessage(state);
+                state = GameState.action;
+                break;
+            case action:
+
+                break;
+            default:
+                break;
+        }
+        return state;
     }
 
     public Game getGame() {
@@ -114,5 +145,9 @@ public class GameController {
 
     public GameState getState() {
         return state;
+    }
+
+    public PlayerAction getPlayerActions() {
+        return playerActions;
     }
 }

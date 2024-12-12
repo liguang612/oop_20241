@@ -20,19 +20,29 @@ public class BattleLayer extends JPanel {
         setOpaque(false);
         setSize(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
 
+        PlayerAction actions = controller.getPlayerActions();
+        add(actions);
+
         Story story = controller.getStory();
         add(story);
+
+        BattleGround ground = controller.getGround();
+        add(ground);
+
         layout.putConstraint(SpringLayout.NORTH, story, -260, SpringLayout.SOUTH, story);
         layout.putConstraint(SpringLayout.SOUTH, story, -40, SpringLayout.SOUTH, this);
         layout.putConstraint(SpringLayout.WEST, story, -20, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, story, 4, SpringLayout.EAST, this);
 
-        BattleGround ground = controller.getGround();
-        add(ground);
         layout.putConstraint(SpringLayout.NORTH, ground, 0, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.SOUTH, ground, 0, SpringLayout.NORTH, story);
         layout.putConstraint(SpringLayout.WEST, ground, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, ground, 0, SpringLayout.EAST, this);
+
+        layout.putConstraint(SpringLayout.NORTH, actions, 0, SpringLayout.NORTH, story);
+        layout.putConstraint(SpringLayout.SOUTH, actions, 0, SpringLayout.SOUTH, story);
+        layout.putConstraint(SpringLayout.EAST, actions, -20, SpringLayout.EAST, story);
+        layout.putConstraint(SpringLayout.WEST, actions, 1093, SpringLayout.WEST, story);
 
         addFocusListener(new FocusAdapter() {
             @Override
