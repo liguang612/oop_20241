@@ -13,8 +13,8 @@ import Model.Pokemon;
 import View.Game.BattleGround;
 import View.Game.BattleLayer;
 import View.Game.Game;
-import View.Game.PlayerAction;
 import View.Game.Story;
+import View.Game.Widget.PlayerAction;
 
 public class GameController {
     private Game game;
@@ -27,7 +27,7 @@ public class GameController {
 
     private Integer gameLayerLevel = JLayeredPane.DEFAULT_LAYER;
 
-    // POKE
+    // MODEL
     private List<Pokemon> ourPokemons;
     private Pokemon ally, enemy;
 
@@ -69,7 +69,8 @@ public class GameController {
     private void initMatch() {
         Random rand = new Random();
 
-        ally = ourPokemons.get(rand.nextInt(ourPokemons.size()));
+        if (ally == null)
+            ally = ourPokemons.get(rand.nextInt(ourPokemons.size()));
         enemy = AppConstants.ALL_OF_POKEMONS.get(rand.nextInt(AppConstants.ALL_OF_POKEMONS.size()));
     }
 
@@ -91,6 +92,10 @@ public class GameController {
                 return "What will " + ally.getName() + " do?";
             case skills:
                 return "Choose skills";
+            case run:
+                return "Are you sure to escape the battle?";
+            case escape:
+                return "You got away safely";
             default:
                 return "";
         }
@@ -104,7 +109,7 @@ public class GameController {
             case change:
                 state = GameState.action;
 
-                playerActions.setPokemon(null);
+                playerActions.setMode(0);
                 sendMessage(state);
 
                 break;
@@ -119,28 +124,43 @@ public class GameController {
         switch (state) {
             case init:
                 state = GameState.action;
-                sendMessage(state);
 
                 playerActions.setVisible(true);
+                playerActions.setMode(0);
                 playerActions.requestFocusInWindow();
 
                 break;
             case action:
                 if (playerActions.option == 0) {
                     state = GameState.skills;
-                    playerActions.setPokemon(ally);
+                    playerActions.setMode(ally);
                 } else if (playerActions.option == 1) {
                     state = GameState.run;
+                    playerActions.setMode(2);
                 } else if (playerActions.option == 2) {
                     state = GameState.change;
                 }
 
-                sendMessage(state);
+                break;
+            case run:
+                if (playerActions.option == 0) {
+                    state = GameState.escape;
+                } else {
+                    back();
+                }
+
+                break;
+            case escape:
+                state = GameState.init;
+
+                initMatch();
 
                 break;
             default:
                 break;
         }
+
+        sendMessage(state);
         return state;
     }
 

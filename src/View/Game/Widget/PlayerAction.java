@@ -1,4 +1,4 @@
-package View.Game;
+package View.Game.Widget;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -18,13 +18,18 @@ import Model.Skill;
 import View.Share.RoundPanel;
 
 public class PlayerAction extends RoundPanel implements KeyListener {
+    // Controller
     private GameController controller;
 
+    // UI
     private RoundPanel mainPanel;
 
+    // Model
     private Pokemon pokemon;
 
-    public int option = -1;
+    // Data
+    /// Mode mapping: 0 -> actions, 1 -> skills, 2 -> Yes/No
+    public int mode = 0, option = -1;
 
     public PlayerAction(GameController controller) {
         super(AppConstants.BORDER_RADIUS, 4, Color.BLACK, AppColor.red01);
@@ -44,34 +49,55 @@ public class PlayerAction extends RoundPanel implements KeyListener {
         layout.putConstraint(SpringLayout.WEST, mainPanel, 20, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, mainPanel, -20, SpringLayout.EAST, this);
 
-        viewBasedOnPoke();
+        initView();
 
         addKeyListener(this);
     }
 
-    void viewBasedOnPoke() {
+    // UI
+    void initView() {
         mainPanel.removeAll();
-        if (pokemon == null) {
+        if (mode == 0) {
             mainPanel.add(new JLabel("Fight"));
             mainPanel.add(new JLabel("Run"));
             mainPanel.add(new JLabel("Change"));
-        } else {
+        } else if (mode == 1) {
             for (Skill skill : pokemon.getSkills()) {
                 JLabel sL = new JLabel(skill.getName());
                 sL.setForeground(skill.getType().getColor());
 
                 mainPanel.add(sL);
             }
+        } else if (mode == 2) {
+            mainPanel.add(new JLabel("Yes"));
+            mainPanel.add(new JLabel("No"));
         }
     }
 
+    // Logical
     private void movePointer(int step) {
         if (option >= 0) {
             JLabel old = (JLabel) mainPanel.getComponent(option);
             old.setIcon(null);
         }
 
-        option = (option + step) % 3;
+        // Identify the number of options for ...
+        int numOfOptions = 1;
+        switch (mode) {
+            case 0:
+                numOfOptions = 3;
+                break;
+            case 1:
+                numOfOptions = pokemon.getSkills().length;
+                break;
+            case 2:
+                numOfOptions = 2;
+            default:
+                break;
+        }
+
+        // ... calculating pointer
+        option = (option + step) % numOfOptions;
 
         JLabel _new = (JLabel) mainPanel.getComponent(option);
         _new.setIcon(AppConstants.IMG_CURSOR);
@@ -92,10 +118,16 @@ public class PlayerAction extends RoundPanel implements KeyListener {
         }
     }
 
-    public void setPokemon(Pokemon pokemon) {
+    public void setMode(int mode) {
+        this.mode = mode;
+        initView();
+    }
+
+    public void setMode(Pokemon pokemon) {
         this.pokemon = pokemon;
+        mode = 1;
         option = -1;
-        viewBasedOnPoke();
+        initView();
     }
 
     @Override

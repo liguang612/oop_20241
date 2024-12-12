@@ -136,7 +136,8 @@ public class AppConstants {
 		skills, change, run,
 		attack, isAttacked,
 		success, failed,
-		win, lose
+		win, lose,
+		escape
 	}
 
 	// GROUND

@@ -20,13 +20,16 @@ import View.Share.SpriteAnimation;
 public class BattleGround extends JPanel implements ActionListener {
 	private GameController controller;
 
+	// UI
 	private SpringLayout layout;
-
 	private JLabel eGround, pGround, trainer;
 	private SpriteAnimation ally, enemy;
 
+	// Animation
 	private Timer timer;
 	private int posX = 0;
+	/// 1 -> moveInAll, 2 -> moveInEnemy, -1 -> moveOutAll, -2 -> moveOutEnemy
+	private Direction direction = Direction.allMoveIn;
 
 	public BattleGround(GameController controller) {
 		super();
@@ -107,23 +110,34 @@ public class BattleGround extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		int pWidth = AppConstants.SCREEN_WIDTH;
 
-		layout.putConstraint(SpringLayout.WEST, eGround, pWidth - posX, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.WEST, pGround, posX - pWidth, SpringLayout.WEST, this);
+		if (direction == Direction.allMoveIn) {
+			layout.putConstraint(SpringLayout.WEST, eGround, pWidth - posX, SpringLayout.WEST, this);
+			layout.putConstraint(SpringLayout.WEST, pGround, posX - pWidth, SpringLayout.WEST, this);
 
-		revalidate();
-		repaint();
+			revalidate();
+			repaint();
 
-		if (posX >= pWidth) {
-			timer.stop();
+			if (posX >= pWidth) {
+				timer.stop();
 
-			ally.startAnimation();
-			enemy.startAnimation();
+				ally.startAnimation();
+				enemy.startAnimation();
 
-			controller.sendMessage(GameState.init);
+				controller.sendMessage(GameState.init);
+			}
+
+			posX += 20;
+			if (posX >= pWidth)
+				posX = pWidth;
+		} else if (direction == Direction.enemyMoveOut) {
+
 		}
+	}
 
-		posX += 20;
-		if (posX >= pWidth)
-			posX = pWidth;
+	enum Direction {
+		allMoveIn,
+		enemyMoveIn,
+		allMoveOut,
+		enemyMoveOut
 	}
 }

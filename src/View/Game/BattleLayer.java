@@ -8,6 +8,7 @@ import javax.swing.SpringLayout;
 
 import Controller.GameController;
 import Data.AppConstants;
+import View.Game.Widget.PlayerAction;
 
 public class BattleLayer extends JPanel {
     private SpringLayout layout = new SpringLayout();
