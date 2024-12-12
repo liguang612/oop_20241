@@ -10,6 +10,7 @@ public class Pokemon {
     private ImageIcon avatar;
     private boolean gender; // true: male; false: female
     private int hp;
+    private int armor;
     private int id;
     private int IVs;
     private String name;
@@ -17,7 +18,7 @@ public class Pokemon {
     private Skill[] skills;
     private PokeType[] type;
 
-    public Pokemon(String ability, Animation animation, ImageIcon avatar, int hp, int id, int IVs, String name,
+    public Pokemon(String ability, Animation animation, ImageIcon avatar, int hp,int armor, int id, int IVs, String name,
             String nature, Skill[] skills, PokeType[] type) {
         this.ability = ability;
         this.animation = new SpriteAnimation(animation.getSpritePath(), animation.getJsonPath());
@@ -25,6 +26,7 @@ public class Pokemon {
         this.avatar = avatar;
         gender = true;
         this.hp = hp;
+        this.armor = armor;
         this.id = id;
         this.IVs = IVs;
         this.name = name;
@@ -55,6 +57,10 @@ public class Pokemon {
 
     public int getHp() {
         return hp;
+    }
+
+    public int getArmor() {
+        return armor;
     }
 
     public int getId() {
