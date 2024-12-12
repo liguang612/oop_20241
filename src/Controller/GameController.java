@@ -50,7 +50,7 @@ public class GameController {
 
         ground = new BattleGround(this);
 
-        playerActions = new PlayerAction();
+        playerActions = new PlayerAction(this);
         playerActions.setVisible(false);
 
         battle = new BattleLayer(this);
@@ -79,26 +79,63 @@ public class GameController {
         story.receiveMsg(genMessage(state));
     }
 
+    public void sendMessage(String msg) {
+        story.receiveMsg(msg);
+    }
+
     private String genMessage(GameState state) {
         switch (state) {
             case init:
                 return ally.getName() + " .vs " + enemy.getName();
             case action:
-                playerActions.setVisible(true);
                 return "What will " + ally.getName() + " do?";
+            case skills:
+                return "Choose skills";
             default:
                 return "";
         }
     }
 
     // STATE
+    public GameState back() {
+        switch (state) {
+            case skills:
+            case run:
+            case change:
+                state = GameState.action;
+
+                playerActions.setPokemon(null);
+                sendMessage(state);
+
+                break;
+            default:
+                break;
+        }
+
+        return state;
+    }
+
     public GameState next() {
         switch (state) {
             case init:
-                sendMessage(state);
                 state = GameState.action;
+                sendMessage(state);
+
+                playerActions.setVisible(true);
+                playerActions.requestFocusInWindow();
+
                 break;
             case action:
+                if (playerActions.option == 0) {
+                    state = GameState.skills;
+                    playerActions.setPokemon(ally);
+                } else if (playerActions.option == 1) {
+                    state = GameState.run;
+                } else if (playerActions.option == 2) {
+                    state = GameState.change;
+                }
+
+                sendMessage(state);
 
                 break;
             default:

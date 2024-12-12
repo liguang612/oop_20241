@@ -2,7 +2,6 @@ package View.Game;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,7 +15,6 @@ import javax.swing.Timer;
 import Controller.GameController;
 import Data.AppColor;
 import Data.AppConstants;
-import Data.AppConstants.GameState;
 import View.Share.RoundPanel;
 
 public class Story extends RoundPanel implements ActionListener, KeyListener {
@@ -51,6 +49,8 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
         mainPanel.add(msgLabel);
 
         timer = new Timer(60, this);
+
+        addKeyListener(this);
     }
 
     @Override
@@ -60,7 +60,6 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
             idx++;
         } else {
             timer.stop();
-            addKeyListener(this);
         }
     }
 
@@ -69,7 +68,6 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
         msgLabel.setText("");
         idx = 0;
 
-        removeKeyListener(this);
         timer.start();
     }
 
@@ -79,24 +77,9 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // Get next state
-        GameState nextState = controller.next();
-
         // Key event handler
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            controller.sendMessage(nextState);
-        } else if (e.getKeyCode() == KeyEvent.VK_1) {
-            if (nextState != GameState.action)
-                return;
-            controller.sendMessage(GameState.skills);
-        } else if (e.getKeyCode() == KeyEvent.VK_2) {
-            if (controller.getState() != GameState.action)
-                return;
-            controller.sendMessage(GameState.run);
-        } else if (e.getKeyCode() == KeyEvent.VK_3) {
-            if (controller.getState() != GameState.action)
-                return;
-            controller.sendMessage(GameState.change);
+            controller.next();
         }
     }
 

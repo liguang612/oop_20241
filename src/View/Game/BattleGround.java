@@ -13,6 +13,7 @@ import javax.swing.Timer;
 
 import Controller.GameController;
 import Data.AppConstants;
+import Data.AppConstants.GameState;
 import Utils.Pair;
 import View.Share.SpriteAnimation;
 
@@ -118,7 +119,7 @@ public class BattleGround extends JPanel implements ActionListener {
 			ally.startAnimation();
 			enemy.startAnimation();
 
-			controller.next();
+			controller.sendMessage(GameState.init);
 		}
 
 		posX += 20;
