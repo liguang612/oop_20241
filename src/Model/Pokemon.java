@@ -6,6 +6,7 @@ import View.Share.SpriteAnimation;
 
 public class Pokemon {
     private String ability;
+    private int armor;
     private SpriteAnimation animation, animationFromBack;
     private ImageIcon avatar;
     private boolean gender; // true: male; false: female
@@ -17,7 +18,8 @@ public class Pokemon {
     private Skill[] skills;
     private PokeType[] type;
 
-    public Pokemon(String ability, Animation animation, ImageIcon avatar, int hp, int id, int IVs, String name,
+    public Pokemon(String ability, Animation animation, ImageIcon avatar, int hp, int id, int armor, int IVs,
+            String name,
             String nature, Skill[] skills, PokeType[] type) {
         this.ability = ability;
         this.animation = new SpriteAnimation(animation.getSpritePath(), animation.getJsonPath());
@@ -83,5 +85,9 @@ public class Pokemon {
 
     public SpriteAnimation getAnimationFromBack() {
         return animationFromBack;
+    }
+
+    public int getArmor() {
+        return armor;
     }
 }
