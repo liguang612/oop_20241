@@ -58,8 +58,6 @@ public class BattleGround extends JPanel implements ActionListener {
 				this);
 		layout.putConstraint(SpringLayout.EAST, eGround, AppConstants.SCREEN_WIDTH, SpringLayout.WEST, eGround);
 
-		layout.putConstraint(SpringLayout.WEST, trainer, 0, SpringLayout.WEST, eGround);
-
 		pGround = new JLabel();
 		add(pGround);
 		layout.putConstraint(SpringLayout.NORTH, pGround, 0, SpringLayout.NORTH, this);
@@ -68,15 +66,17 @@ public class BattleGround extends JPanel implements ActionListener {
 				this);
 		layout.putConstraint(SpringLayout.EAST, pGround, AppConstants.SCREEN_WIDTH, SpringLayout.WEST, pGround);
 
+		layout.putConstraint(SpringLayout.WEST, trainer, 0, SpringLayout.WEST, pGround);
+
 		timer = new Timer(15, this);
 		timer.start();
 
 		SwingUtilities.invokeLater(() -> {
 			final double scale = getWidth() / grounds.first().getIconWidth();
 
-			Image eii = grounds.first().getImage().getScaledInstance(getWidth(), getHeight(),
+			Image eii = grounds.second().getImage().getScaledInstance(getWidth(), getHeight(),
 					Image.SCALE_SMOOTH);
-			Image pii = grounds.second().getImage().getScaledInstance(getWidth(), getHeight(),
+			Image pii = grounds.first().getImage().getScaledInstance(getWidth(), getHeight(),
 					Image.SCALE_SMOOTH);
 			Image trii = AppConstants.IMG_TRAINER_MALE.getImage().getScaledInstance(
 					(int) (AppConstants.IMG_TRAINER_MALE.getIconWidth() * scale),
@@ -93,12 +93,12 @@ public class BattleGround extends JPanel implements ActionListener {
 					SpringLayout.NORTH, eGround);
 			layout.putConstraint(SpringLayout.WEST, enemy,
 					eGround.getWidth() * 217 / 320 - enemy.getWidth() / 2,
-					SpringLayout.WEST, pGround);
+					SpringLayout.WEST, eGround);
 
 			layout.putConstraint(
 					SpringLayout.WEST, ally,
 					pGround.getWidth() * 110 / 320 - ally.getWidth() / 2,
-					SpringLayout.WEST, eGround);
+					SpringLayout.WEST, pGround);
 			layout.putConstraint(
 					SpringLayout.SOUTH, ally,
 					0,
@@ -120,6 +120,7 @@ public class BattleGround extends JPanel implements ActionListener {
 			if (posX >= pWidth) {
 				timer.stop();
 
+				posX = 0;
 				ally.startAnimation();
 				enemy.startAnimation();
 
@@ -130,11 +131,28 @@ public class BattleGround extends JPanel implements ActionListener {
 			if (posX >= pWidth)
 				posX = pWidth;
 		} else if (direction == Direction.enemyMoveOut) {
+			layout.putConstraint(SpringLayout.WEST, eGround, posX, SpringLayout.WEST, this);
 
+			revalidate();
+			repaint();
+
+			if (posX >= pWidth) {
+				posX = 0;
+				ally.stopAnimation();
+
+				controller.sendMessage(GameState.init);
+			}
+
+			posX -= 20;
 		}
 	}
 
-	enum Direction {
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+		timer.start();
+	}
+
+	public enum Direction {
 		allMoveIn,
 		enemyMoveIn,
 		allMoveOut,

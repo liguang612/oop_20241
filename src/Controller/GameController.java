@@ -34,8 +34,9 @@ public class GameController {
     // LAYOUT
     private SpringLayout layout = new SpringLayout();
 
-    // PROGRESS
+    // DATA
     private GameState state;
+    private int level = 1;
 
     public GameController(List<Pokemon> pokemons) {
         // Data
@@ -145,6 +146,11 @@ public class GameController {
             case run:
                 if (playerActions.option == 0) {
                     state = GameState.escape;
+
+                    playerActions.setVisible(false);
+                    ground.setDirection(BattleGround.Direction.enemyMoveOut);
+
+                    level++;
                 } else {
                     back();
                 }
