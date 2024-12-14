@@ -31,6 +31,7 @@ public class AppConstants {
 	public static ImageIcon IMG_BUTTON_F;
 	public static ImageIcon IMG_BUTTON_R;
 	public static ImageIcon IMG_BUTTON_S;
+	public static ImageIcon IMG_CHANGE_POKEMON_BACKGROUND;
 	public static ImageIcon IMG_CURSOR;
 	public static ImageIcon IMG_CURSOR_SMALL;
 	public static ImageIcon IMG_GAME_BACKGROUND;
@@ -86,6 +87,8 @@ public class AppConstants {
 		IMG_BUTTON_F = new ImageIcon(getClass().getResource("../assets/img/button_f.png"));
 		IMG_BUTTON_R = new ImageIcon(getClass().getResource("../assets/img/button_r.png"));
 		IMG_BUTTON_S = new ImageIcon(getClass().getResource("../assets/img/button_s.png"));
+		IMG_CHANGE_POKEMON_BACKGROUND = new ImageIcon(
+				getClass().getResource("../assets/img/change_pokemon_background.png"));
 		IMG_CURSOR = new ImageIcon(getClass().getResource("../assets/img/cursor.png"));
 		IMG_CURSOR_SMALL = new ImageIcon(getClass().getResource("../assets/img/cursor_small.png"));
 		IMG_GENDER_MALE = new ImageIcon(getClass().getResource("../assets/img/male.png"));

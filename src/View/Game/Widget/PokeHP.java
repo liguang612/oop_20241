@@ -1,6 +1,6 @@
 package View.Game.Widget;
 
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -15,7 +15,12 @@ import Model.PokeType;
 import Model.Pokemon;
 
 public class PokeHP extends JPanel {
+    // Model
     private Pokemon pokemon;
+
+    // UI
+    private JLabel nameLabel, levelLabel, hpLeftLabel;
+    private JPanel typePanel;
 
     public PokeHP(Pokemon pokemon) {
         super();
@@ -28,21 +33,18 @@ public class PokeHP extends JPanel {
         JPanel hpPanel = new JPanel(new GridLayout(2, 1));
 
         JPanel topHPPanel = new JPanel(new GridLayout(1, 2, 15, 15));
-        topHPPanel.add(new JLabel(pokemon.getName()) {
-            @Override
-            public void setForeground(Color fg) {
-                super.setForeground(AppColor.black);
-            }
-        });
-        topHPPanel.add(new JLabel("Lv." + pokemon.getIVs()) {
-            @Override
-            public void setForeground(Color fg) {
-                super.setForeground(AppColor.black);
-            }
-        });
+
+        nameLabel = new JLabel();
+        nameLabel.setForeground(AppColor.black);
+        topHPPanel.add(nameLabel);
+
+        levelLabel = new JLabel();
+        levelLabel.setForeground(AppColor.black);
+        topHPPanel.add(levelLabel);
+
         hpPanel.add(topHPPanel);
 
-        JPanel bottomHPPanel = new JPanel() {
+        JPanel bottomHPPanel = new JPanel(new GridLayout(1, 1)) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -59,10 +61,31 @@ public class PokeHP extends JPanel {
                 g2d.fillRect((int) (getWidth() * percent), 0,
                         (int) (getWidth() * (1 - percent)), getHeight());
             }
+
+            @Override
+            public void setPreferredSize(Dimension preferredSize) {
+                Dimension d = new Dimension(pokemon.getHp() * 5, ((int) preferredSize.getHeight()));
+                super.setPreferredSize(d);
+            }
         };
         hpPanel.add(bottomHPPanel);
 
-        JPanel typePanel = new JPanel(new GridLayout(1, pokemon.getType().length));
+        hpLeftLabel = new JLabel("" + pokemon.getHpLeft());
+        bottomHPPanel.add(hpLeftLabel);
+
+        typePanel = new JPanel(new GridLayout(1, pokemon.getType().length));
+
+        initUI();
+
+        add(hpPanel);
+        add(typePanel);
+    }
+
+    private void initUI() {
+        nameLabel.setText(pokemon.getName());
+        levelLabel.setText("Lv. " + pokemon.getIVs());
+
+        typePanel.removeAll();
         for (PokeType type : pokemon.getType()) {
             JLabel label = new JLabel("  ");
             label.setBackground(type.getColor());
@@ -70,9 +93,10 @@ public class PokeHP extends JPanel {
 
             typePanel.add(label);
         }
-
-        add(hpPanel);
-        add(typePanel);
     }
 
+    public void setPokemon(Pokemon pokemon) {
+        this.pokemon = pokemon;
+        initUI();
+    }
 }

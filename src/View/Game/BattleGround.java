@@ -70,17 +70,18 @@ public class BattleGround extends JPanel implements ActionListener {
 		layout.putConstraint(SpringLayout.WEST, trainer, 0, SpringLayout.WEST, pGround);
 
 		eHP = new PokeHP(controller.getEnemy());
+		eHP.setVisible(false);
 		add(eHP);
 		layout.putConstraint(SpringLayout.NORTH, eHP, 15, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, eHP, 15, SpringLayout.WEST, this);
 
 		pHP = new PokeHP(controller.getAlly());
+		pHP.setVisible(false);
 		add(pHP);
 		layout.putConstraint(SpringLayout.SOUTH, pHP, -30, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.EAST, pHP, -30, SpringLayout.EAST, this);
 
 		timer = new Timer(15, this);
-		timer.start();
 
 		SwingUtilities.invokeLater(() -> {
 			final double scale = getWidth() / grounds.first().getIconWidth();
@@ -98,22 +99,7 @@ public class BattleGround extends JPanel implements ActionListener {
 			pGround.setIcon(new ImageIcon(pii));
 			trainer.setIcon(new ImageIcon(trii));
 
-			layout.putConstraint(
-					SpringLayout.NORTH, enemy,
-					eGround.getHeight() * 65 / 132 - enemy.getHeight() / 2,
-					SpringLayout.NORTH, eGround);
-			layout.putConstraint(SpringLayout.WEST, enemy,
-					eGround.getWidth() * 217 / 320 - enemy.getWidth() / 2,
-					SpringLayout.WEST, eGround);
-
-			layout.putConstraint(
-					SpringLayout.WEST, ally,
-					pGround.getWidth() * 110 / 320 - ally.getWidth() / 2,
-					SpringLayout.WEST, pGround);
-			layout.putConstraint(
-					SpringLayout.SOUTH, ally,
-					0,
-					SpringLayout.SOUTH, pGround);
+			setUpConstraints();
 		});
 	}
 
@@ -135,7 +121,11 @@ public class BattleGround extends JPanel implements ActionListener {
 				ally.startAnimation();
 				enemy.startAnimation();
 
+				eHP.setVisible(true);
+				pHP.setVisible(true);
+
 				controller.sendMessage(GameState.init);
+				direction = null;
 			}
 
 			posX += 20;
@@ -143,6 +133,7 @@ public class BattleGround extends JPanel implements ActionListener {
 				posX = pWidth;
 		} else if (direction == Direction.enemyMoveOut) {
 			layout.putConstraint(SpringLayout.WEST, eGround, posX, SpringLayout.WEST, this);
+			eHP.setVisible(false);
 
 			revalidate();
 			repaint();
@@ -152,15 +143,83 @@ public class BattleGround extends JPanel implements ActionListener {
 				ally.stopAnimation();
 
 				controller.sendMessage(GameState.init);
+				direction = null;
 			}
 
 			posX -= 20;
+		} else if (direction == Direction.enemyMoveIn) {
+			layout.putConstraint(SpringLayout.WEST, eGround, -posX, SpringLayout.EAST, this);
+
+			revalidate();
+			repaint();
+
+			if (posX >= pWidth) {
+				timer.stop();
+
+				posX = 0;
+				ally.startAnimation();
+				enemy.startAnimation();
+
+				eHP.setVisible(true);
+
+				controller.sendMessage(GameState.init);
+				direction = null;
+			}
+
+			posX += 20;
+			if (posX >= pWidth)
+				posX = pWidth;
 		}
 	}
 
 	public void setDirection(Direction direction) {
 		this.direction = direction;
+
+		if (ally != controller.getAlly().getAnimationFromBack()) {
+			remove(ally);
+			ally = controller.getAlly().getAnimationFromBack();
+			add(ally);
+
+			pHP.setPokemon(controller.getAlly());
+
+			setComponentZOrder(ally, 0);
+		}
+		if (enemy != controller.getEnemy().getAnimation()) {
+			remove(enemy);
+			enemy = controller.getEnemy().getAnimation();
+			add(enemy);
+
+			eHP.setPokemon(controller.getEnemy());
+
+			setComponentZOrder(enemy, 0);
+		}
+
+		setUpConstraints();
+
+		revalidate();
+		repaint();
+
 		timer.start();
+	}
+
+	// Set up constraints from ally, enemy to their ground
+	public void setUpConstraints() {
+		layout.putConstraint(
+				SpringLayout.NORTH, enemy,
+				eGround.getHeight() * 65 / 132 - enemy.getHeight() / 2,
+				SpringLayout.NORTH, eGround);
+		layout.putConstraint(SpringLayout.WEST, enemy,
+				eGround.getWidth() * 217 / 320 - enemy.getWidth() / 2,
+				SpringLayout.WEST, eGround);
+
+		layout.putConstraint(
+				SpringLayout.WEST, ally,
+				pGround.getWidth() * 110 / 320 - ally.getWidth() / 2,
+				SpringLayout.WEST, pGround);
+		layout.putConstraint(
+				SpringLayout.SOUTH, ally,
+				0,
+				SpringLayout.SOUTH, pGround);
 	}
 
 	public enum Direction {

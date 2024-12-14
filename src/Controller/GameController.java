@@ -12,6 +12,7 @@ import Data.AppConstants.GameState;
 import Model.Pokemon;
 import View.Game.BattleGround;
 import View.Game.BattleLayer;
+import View.Game.ChangePokemon;
 import View.Game.Game;
 import View.Game.Story;
 import View.Game.Widget.PlayerAction;
@@ -22,6 +23,7 @@ public class GameController {
     // PALETTE LAYER
     private BattleLayer battle;
     private BattleGround ground;
+    private ChangePokemon changePoke;
     private Story story;
     private PlayerAction playerActions;
 
@@ -50,13 +52,17 @@ public class GameController {
         story = new Story(this);
 
         ground = new BattleGround(this);
+        ground.setDirection(BattleGround.Direction.allMoveIn);
 
         playerActions = new PlayerAction(this);
         playerActions.setVisible(false);
 
         battle = new BattleLayer(this);
-
         addGameLayer(battle);
+
+        changePoke = new ChangePokemon();
+        // changePoke.setVisible(false);
+        addGameLayer(changePoke);
 
         // State
         state = GameState.init;
@@ -147,8 +153,8 @@ public class GameController {
                 if (playerActions.option == 0) {
                     state = GameState.escape;
 
-                    playerActions.setVisible(false);
                     ground.setDirection(BattleGround.Direction.enemyMoveOut);
+                    playerActions.setVisible(false);
 
                     level++;
                 } else {
@@ -160,6 +166,8 @@ public class GameController {
                 state = GameState.init;
 
                 initMatch();
+                ground.setDirection(BattleGround.Direction.enemyMoveIn);
+                level++;
 
                 break;
             default:
