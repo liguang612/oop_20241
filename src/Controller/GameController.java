@@ -11,6 +11,8 @@ import javax.swing.SwingUtilities;
 import Data.AppConstants;
 import Data.AppConstants.GameState;
 import Model.Pokemon;
+import Model.Skill;
+import Utils.Utils;
 import View.Game.BattleGround;
 import View.Game.BattleLayer;
 import View.Game.ChangePokemon;
@@ -71,11 +73,11 @@ public class GameController {
     }
 
     private void initMatch() {
-        Random rand = new Random();
-
         if (ally == null)
-            ally = ourPokemons.get(rand.nextInt(ourPokemons.size()));
-        enemy = AppConstants.ALL_OF_POKEMONS.get(rand.nextInt(AppConstants.ALL_OF_POKEMONS.size()));
+            ally = ourPokemons.get(Utils.random(ourPokemons.size()));
+        enemy = AppConstants.ALL_OF_POKEMONS.get(Utils.random(AppConstants.ALL_OF_POKEMONS.size())).clone();
+
+        logic();
     }
 
     // MESSAGE
@@ -108,6 +110,7 @@ public class GameController {
     // STATE
     public GameState back() {
         switch (state) {
+            case attack:
             case skills:
             case run:
             case change:
@@ -176,9 +179,62 @@ public class GameController {
 
                 break;
             case skills:
+                state = GameState.attack;
+
+                int cost, damage;
+                Skill skill;
+
                 // Select skill
                 if (playerActions.option < 3) {
+                    // Ally attacks enemy
+                    skill = ally.getSkills()[playerActions.option];
+                    cost = skill.getCost();
+                    damage = skill.getDamage();
+
+                    if (ally.getMana() >= cost) {
+                        enemy.setHpLeft((int) (enemy.getHpLeft() - damage / Utils.log7(enemy.getArmor())));
+                        ally.setMana(ally.getMana() - cost);
+
+                        sendMessage("You have just used " + skill.getName() + "!");
+                        return state;
+                    } else {
+                        sendMessage("You don't have enough mana to use this skill");
+                        return state;
+                    }
                 }
+                // Skip
+                else {
+                    sendMessage("You've skipped this turn!");
+                    return state;
+                }
+            case attack:
+                state = GameState.skills;
+
+                // Enemy attacks ally
+                skill = enemy.getSkills()[Utils.random(3)];
+                // Attempt
+                if (skill.getCost() > enemy.getMana()) {
+                    for (Skill s : enemy.getSkills()) {
+                        if (s.getCost() <= enemy.getMana()) {
+                            skill = s;
+                            break;
+                        }
+                    }
+                }
+                // Attempt failed
+                if (skill.getCost() > enemy.getMana()) {
+                    sendMessage("Enemy didn't do anything...");
+                    return state;
+                }
+                cost = skill.getCost();
+                damage = skill.getDamage();
+
+                ally.setHpLeft((int) (ally.getHpLeft() - damage / Utils.log7(ally.getArmor())));
+                enemy.setMana(enemy.getMana() - skill.getCost());
+
+                sendMessage(enemy.getName() + " has just use " + skill.getName() + "!");
+
+                return state;
             default:
                 break;
         }

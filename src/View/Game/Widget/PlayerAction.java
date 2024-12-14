@@ -15,7 +15,6 @@ import Data.AppConstants;
 import Data.AppConstants.GameState;
 import Model.Pokemon;
 import Model.Skill;
-import View.Game.ChangePokemon;
 import View.Share.RoundPanel;
 
 public class PlayerAction extends RoundPanel implements KeyListener {
@@ -131,6 +130,10 @@ public class PlayerAction extends RoundPanel implements KeyListener {
                     controller.sendMessage("Change to the other pokemon in your team");
                 default:
                     break;
+            }
+        } else if (controller.getState() == GameState.skills) {
+            if (option == 3) {
+                controller.sendMessage("Skip this turn. (You will be attacked!)");
             }
         }
     }

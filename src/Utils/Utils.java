@@ -5,6 +5,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,5 +44,15 @@ public class Utils {
         }
 
         return spriteCoordinates;
+    }
+
+    public static double log7(double x) {
+        return Math.log(x) / Math.log(7);
+    }
+
+    public static int random(int bound) {
+        Random rand = new Random();
+
+        return rand.nextInt(bound);
     }
 }

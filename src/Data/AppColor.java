@@ -23,6 +23,7 @@ public class AppColor {
     public static final Color green01 = new Color(0x68B07A);
     public static final Color green02 = new Color(0x38FF7A);
 
+    public static final Color red = Color.RED;
     public static final Color red01 = new Color(0xC73625);
     public static final Color red02 = new Color(0xF83018);
 

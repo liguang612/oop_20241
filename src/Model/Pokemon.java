@@ -169,4 +169,8 @@ public class Pokemon {
         return mana;
     }
 
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
 }

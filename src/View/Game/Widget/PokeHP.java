@@ -19,7 +19,7 @@ public class PokeHP extends JPanel {
     private Pokemon pokemon;
 
     // UI
-    private JLabel nameLabel, levelLabel, hpLeftLabel;
+    private JLabel nameLabel, levelLabel, hpLeftLabel, manaLabel;
     private JPanel typePanel;
 
     public PokeHP(Pokemon pokemon) {
@@ -44,7 +44,7 @@ public class PokeHP extends JPanel {
 
         hpPanel.add(topHPPanel);
 
-        JPanel bottomHPPanel = new JPanel(new GridLayout(1, 1)) {
+        JPanel bottomHPPanel = new JPanel(new GridLayout(1, 2)) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -70,7 +70,12 @@ public class PokeHP extends JPanel {
         };
         hpPanel.add(bottomHPPanel);
 
-        hpLeftLabel = new JLabel("" + pokemon.getHpLeft());
+        manaLabel = new JLabel("" + pokemon.getMana());
+        manaLabel.setForeground(AppColor.blue);
+        bottomHPPanel.add(manaLabel);
+
+        hpLeftLabel = new JLabel("" + pokemon.getHpLeft(), JLabel.RIGHT);
+        hpLeftLabel.setForeground(AppColor.red);
         bottomHPPanel.add(hpLeftLabel);
 
         typePanel = new JPanel(new GridLayout(1, pokemon.getType().length));
