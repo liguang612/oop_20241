@@ -4,6 +4,10 @@ import java.awt.Color;
 
 public class AppColor {
     public static final Color black = Color.BLACK;
+    public static final Color black01 = new Color(0x212121);
+    public static final Color black02 = new Color(0x27425D);
+
+    public static final Color blue = Color.BLUE;
     public static final Color blue01 = new Color(0xACD3F3);
     public static final Color blue02 = new Color(0x362D3E);
     public static final Color blue03 = new Color(216, 224, 240);
@@ -14,6 +18,7 @@ public class AppColor {
     public static final Color gray04 = new Color(156, 156, 156);
 
     public static final Color green01 = new Color(0x68B07A);
+    public static final Color green02 = new Color(0x38FF7A);
 
     public static final Color red01 = new Color(0xC73625);
     public static final Color red02 = new Color(0xF83018);

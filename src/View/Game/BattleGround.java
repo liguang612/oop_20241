@@ -15,6 +15,7 @@ import Controller.GameController;
 import Data.AppConstants;
 import Data.AppConstants.GameState;
 import Utils.Pair;
+import View.Game.Widget.PokeHP;
 import View.Share.SpriteAnimation;
 
 public class BattleGround extends JPanel implements ActionListener {
@@ -24,6 +25,7 @@ public class BattleGround extends JPanel implements ActionListener {
 	private SpringLayout layout;
 	private JLabel eGround, pGround, trainer;
 	private SpriteAnimation ally, enemy;
+	private PokeHP eHP, pHP;
 
 	// Animation
 	private Timer timer;
@@ -37,11 +39,6 @@ public class BattleGround extends JPanel implements ActionListener {
 
 		setLayout(layout = controller.getLayout());
 		setOpaque(false);
-
-		trainer = new JLabel(AppConstants.IMG_TRAINER_MALE);
-		add(trainer);
-		layout.putConstraint(SpringLayout.NORTH, trainer, AppConstants.SCREEN_HEIGHT * 2 / 5,
-				SpringLayout.NORTH, this);
 
 		ally = controller.getAlly().getAnimationFromBack();
 		add(ally);
@@ -66,7 +63,21 @@ public class BattleGround extends JPanel implements ActionListener {
 				this);
 		layout.putConstraint(SpringLayout.EAST, pGround, AppConstants.SCREEN_WIDTH, SpringLayout.WEST, pGround);
 
+		trainer = new JLabel(AppConstants.IMG_TRAINER_MALE);
+		add(trainer);
+		layout.putConstraint(SpringLayout.NORTH, trainer, AppConstants.SCREEN_HEIGHT * 2 / 5,
+				SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, trainer, 0, SpringLayout.WEST, pGround);
+
+		eHP = new PokeHP(controller.getEnemy());
+		add(eHP);
+		layout.putConstraint(SpringLayout.NORTH, eHP, 15, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, eHP, 15, SpringLayout.WEST, this);
+
+		pHP = new PokeHP(controller.getAlly());
+		add(pHP);
+		layout.putConstraint(SpringLayout.SOUTH, pHP, -30, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.EAST, pHP, -30, SpringLayout.EAST, this);
 
 		timer = new Timer(15, this);
 		timer.start();

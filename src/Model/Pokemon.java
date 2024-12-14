@@ -10,7 +10,7 @@ public class Pokemon {
     private SpriteAnimation animation, animationFromBack;
     private ImageIcon avatar;
     private boolean gender; // true: male; false: female
-    private int hp;
+    private int hp, hpLeft; // The HP left (after being attacked)
     private int id;
     private int IVs;
     private String name;
@@ -26,7 +26,7 @@ public class Pokemon {
         this.animationFromBack = new SpriteAnimation(animation.getSpritePathBack(), animation.getJsonPathBack());
         this.avatar = avatar;
         gender = true;
-        this.hp = hp;
+        this.hp = this.hpLeft = hp;
         this.id = id;
         this.IVs = IVs;
         this.name = name;
@@ -89,5 +89,9 @@ public class Pokemon {
 
     public int getArmor() {
         return armor;
+    }
+
+    public int getHpLeft() {
+        return hpLeft;
     }
 }
