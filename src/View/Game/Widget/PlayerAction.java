@@ -63,12 +63,17 @@ public class PlayerAction extends RoundPanel implements KeyListener {
             mainPanel.add(new JLabel("Run"));
             mainPanel.add(new JLabel("Change"));
         } else if (mode == 1) {
+            JLabel sL;
             for (Skill skill : pokemon.getSkills()) {
-                JLabel sL = new JLabel(skill.getName());
+                sL = new JLabel(skill.getName());
                 sL.setForeground(skill.getType().getColor());
 
                 mainPanel.add(sL);
             }
+            sL = new JLabel("Skip");
+            sL.setForeground(AppColor.white);
+
+            mainPanel.add(sL);
         } else if (mode == 2) {
             mainPanel.add(new JLabel("Yes"));
             mainPanel.add(new JLabel("No"));
@@ -99,7 +104,7 @@ public class PlayerAction extends RoundPanel implements KeyListener {
                 numOfOptions = 3;
                 break;
             case 1:
-                numOfOptions = pokemon.getSkills().length;
+                numOfOptions = pokemon.getSkills().length + 1;
                 break;
             case 2:
                 numOfOptions = 2;

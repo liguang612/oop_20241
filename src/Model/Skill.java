@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Random;
+
 public enum Skill {
     BRANCH_POKE(30, "Branch Poke", PokeType.GRASS),
     EMBER(30, "Ember", PokeType.FIRE),
@@ -17,6 +19,7 @@ public enum Skill {
     WATER_GUN(30, "Water Gun", PokeType.WATER),
     WITHDRAW(30, "Withdraw", PokeType.WATER);
 
+    private int cost;
     private int damage;
     private String name;
     private PokeType type;
@@ -25,6 +28,14 @@ public enum Skill {
         this.damage = damage;
         this.name = name;
         this.type = type;
+
+        Random rand = new Random();
+        cost = rand.nextInt(10);
+        if (damage >= 30) {
+            cost += 30;
+        } else {
+            cost += 10;
+        }
     }
 
     public int getDamage() {
@@ -37,5 +48,9 @@ public enum Skill {
 
     public PokeType getType() {
         return type;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }

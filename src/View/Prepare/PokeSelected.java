@@ -112,6 +112,12 @@ public class PokeSelected extends JPanel {
     }
 
     public List<Pokemon> getPokemons() {
-        return pokemons;
+        List<Pokemon> res = new ArrayList<>();
+
+        for (Pokemon pokemon : pokemons) {
+            res.add(pokemon.clone());
+        }
+
+        return res;
     }
 }

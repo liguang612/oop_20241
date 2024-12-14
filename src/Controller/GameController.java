@@ -175,6 +175,10 @@ public class GameController {
                 back();
 
                 break;
+            case skills:
+                // Select skill
+                if (playerActions.option < 3) {
+                }
             default:
                 break;
         }
@@ -183,6 +187,13 @@ public class GameController {
         return state;
     }
 
+    // LOGIC
+    void logic() {
+        enemy.setHp((level - 1) / 3 * 20 + 40);
+        enemy.setArmor((level - 1) / 3 * 10);
+    }
+
+    // GETTER
     public Game getGame() {
         return game;
     }
