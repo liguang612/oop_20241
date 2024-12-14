@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.swing.JLayeredPane;
 import javax.swing.SpringLayout;
+import javax.swing.SwingUtilities;
 
 import Data.AppConstants;
 import Data.AppConstants.GameState;
@@ -59,10 +60,6 @@ public class GameController {
 
         battle = new BattleLayer(this);
         addGameLayer(battle);
-
-        changePoke = new ChangePokemon();
-        // changePoke.setVisible(false);
-        addGameLayer(changePoke);
 
         // State
         state = GameState.init;
@@ -146,6 +143,8 @@ public class GameController {
                     playerActions.setMode(2);
                 } else if (playerActions.option == 2) {
                     state = GameState.change;
+                    changePoke = new ChangePokemon(this);
+                    playerActions.setMode(3);
                 }
 
                 break;
@@ -168,6 +167,12 @@ public class GameController {
                 initMatch();
                 ground.setDirection(BattleGround.Direction.enemyMoveIn);
                 level++;
+
+                break;
+            case change:
+                ally = changePoke.getPokemon();
+                ground.setDirection(null);
+                back();
 
                 break;
             default:
@@ -220,5 +225,9 @@ public class GameController {
 
     public PlayerAction getPlayerActions() {
         return playerActions;
+    }
+
+    public ChangePokemon getChangePoke() {
+        return this.changePoke;
     }
 }

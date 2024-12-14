@@ -12,6 +12,7 @@ public class App {
 
         UIManager.put("Label.font", AppConstants.FONT_PIXEL);
         UIManager.put("Label.foreground", Color.WHITE);
+        UIManager.put("Panel.opaque", false);
         UIManager.put("RadioButton.contentAreaFilled", false);
         UIManager.put("RadioButton.font", new Font("Consolas", Font.PLAIN, 32));
         UIManager.put("RadioButton.foreground", Color.WHITE);

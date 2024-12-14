@@ -1,25 +1,39 @@
 package View.Game;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.CardLayout;
+import java.awt.Component;
 
 import javax.swing.JPanel;
 
-import Data.AppConstants;
+import Controller.GameController;
+import Model.Pokemon;
+import View.Game.Widget.PokeChange;
 
 public class ChangePokemon extends JPanel {
-    public ChangePokemon() {
+    private CardLayout layout;
+
+    public ChangePokemon(GameController controller) {
         super();
+
+        setLayout(layout = new CardLayout(10, 10));
+        setOpaque(false);
+
+        for (Pokemon pokemon : controller.getOurPokemons()) {
+            add(new PokeChange(pokemon));
+        }
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void next() {
+        layout.next(this);
+    }
 
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(AppConstants.IMG_CHANGE_POKEMON_BACKGROUND.getImage(),
-                0, 0,
-                AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT,
-                this);
+    public Pokemon getPokemon() {
+        for (Component comp : getComponents()) {
+            if (comp.isVisible()) {
+                return ((PokeChange) comp).getPokemon();
+            }
+        }
+
+        return null;
     }
 }

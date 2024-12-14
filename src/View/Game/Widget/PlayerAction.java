@@ -15,6 +15,7 @@ import Data.AppConstants;
 import Data.AppConstants.GameState;
 import Model.Pokemon;
 import Model.Skill;
+import View.Game.ChangePokemon;
 import View.Share.RoundPanel;
 
 public class PlayerAction extends RoundPanel implements KeyListener {
@@ -71,11 +72,21 @@ public class PlayerAction extends RoundPanel implements KeyListener {
         } else if (mode == 2) {
             mainPanel.add(new JLabel("Yes"));
             mainPanel.add(new JLabel("No"));
+        } else if (mode == 3) {
+            mainPanel.add(controller.getChangePoke());
         }
+
+        revalidate();
+        repaint();
     }
 
     // Logical
     private void movePointer(int step) {
+        if (mode == 3) {
+            controller.getChangePoke().next();
+            return;
+        }
+
         if (option >= 0) {
             JLabel old = (JLabel) mainPanel.getComponent(option);
             old.setIcon(null);
@@ -92,6 +103,7 @@ public class PlayerAction extends RoundPanel implements KeyListener {
                 break;
             case 2:
                 numOfOptions = 2;
+                break;
             default:
                 break;
         }

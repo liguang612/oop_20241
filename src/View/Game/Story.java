@@ -86,5 +86,4 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
     }
-
 }

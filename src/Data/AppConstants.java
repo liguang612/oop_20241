@@ -162,7 +162,7 @@ public class AppConstants {
 		return BULBASAUR = new Pokemon("Overgrown",
 				new Animation(getClass().getResource("../assets/animation/bulbasaur.png").getPath(),
 						getClass().getResource("../assets/animation/bulbasaur.json").getPath()),
-				new ImageIcon(getClass().getResource("../assets/icon/bulbasaur.png")), 100, 1, 10, 3,
+				new ImageIcon(getClass().getResource("../assets/icon/bulbasaur.png")), 100, 10, 1, 3,
 				"Bulbasaur",
 				"Dolice (-)", skills, types);
 	}

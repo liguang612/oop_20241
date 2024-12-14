@@ -172,6 +172,7 @@ public class BattleGround extends JPanel implements ActionListener {
 		}
 	}
 
+	// Direction == null -> reset UI
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 
@@ -199,7 +200,9 @@ public class BattleGround extends JPanel implements ActionListener {
 		revalidate();
 		repaint();
 
-		timer.start();
+		if (direction != null) {
+			timer.start();
+		}
 	}
 
 	// Set up constraints from ally, enemy to their ground

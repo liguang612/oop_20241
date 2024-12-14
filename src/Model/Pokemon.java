@@ -18,7 +18,7 @@ public class Pokemon {
     private Skill[] skills;
     private PokeType[] type;
 
-    public Pokemon(String ability, Animation animation, ImageIcon avatar, int hp, int id, int armor, int IVs,
+    public Pokemon(String ability, Animation animation, ImageIcon avatar, int hp, int armor, int id, int IVs,
             String name,
             String nature, Skill[] skills, PokeType[] type) {
         this.ability = ability;
