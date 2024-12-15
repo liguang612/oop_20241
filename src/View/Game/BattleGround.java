@@ -28,8 +28,10 @@ public class BattleGround extends JPanel implements ActionListener {
 	private PokeHP eHP, pHP;
 
 	// Animation
-	private Timer timer;
+	private Timer timer, resTimer;
 	private int posX = 0;
+	private int win = 3000, lose = 3000;
+
 	/// 1 -> moveInAll, 2 -> moveInEnemy, -1 -> moveOutAll, -2 -> moveOutEnemy
 	private Direction direction = Direction.allMoveIn;
 
@@ -143,6 +145,8 @@ public class BattleGround extends JPanel implements ActionListener {
 				ally.stopAnimation();
 
 				controller.sendMessage(GameState.init);
+				controller.next();
+
 				direction = null;
 			}
 
@@ -205,6 +209,10 @@ public class BattleGround extends JPanel implements ActionListener {
 		}
 	}
 
+	public Direction getDirection() {
+		return direction;
+	}
+
 	// Set up constraints from ally, enemy to their ground
 	public void setUpConstraints() {
 		layout.putConstraint(
@@ -223,6 +231,44 @@ public class BattleGround extends JPanel implements ActionListener {
 				SpringLayout.SOUTH, ally,
 				0,
 				SpringLayout.SOUTH, pGround);
+	}
+
+	public void updateAlly() {
+		pHP.setPokemon(controller.getAlly());
+	}
+
+	public void updateEnemy() {
+		eHP.setPokemon(controller.getEnemy());
+	}
+
+	public void win() {
+		resTimer = new Timer(200, (e) -> {
+			enemy.setVisible(!enemy.isVisible());
+			win -= 200;
+
+			if (win <= 0) {
+				enemy.setVisible(false);
+				win = 3000;
+				resTimer.stop();
+			}
+		});
+
+		resTimer.start();
+	}
+
+	public void lose() {
+		resTimer = new Timer(200, (e) -> {
+			ally.setVisible(!ally.isVisible());
+			lose -= 200;
+
+			if (lose <= 0) {
+				ally.setVisible(false);
+				lose = 3000;
+				resTimer.stop();
+			}
+		});
+
+		resTimer.start();
 	}
 
 	public enum Direction {

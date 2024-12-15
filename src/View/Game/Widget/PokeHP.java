@@ -51,7 +51,7 @@ public class PokeHP extends JPanel {
 
                 Graphics2D g2d = (Graphics2D) g;
 
-                double percent = pokemon.getHpLeft() / pokemon.getHp();
+                double percent = (double) pokemon.getHpLeft() / pokemon.getHp();
 
                 g2d.setColor(AppColor.green02);
                 g2d.fillRect(0, 0,
@@ -89,6 +89,8 @@ public class PokeHP extends JPanel {
     private void initUI() {
         nameLabel.setText(pokemon.getName());
         levelLabel.setText("Lv. " + pokemon.getIVs());
+        manaLabel.setText("" + pokemon.getMana());
+        hpLeftLabel.setText("" + pokemon.getHpLeft());
 
         typePanel.removeAll();
         for (PokeType type : pokemon.getType()) {
@@ -103,5 +105,8 @@ public class PokeHP extends JPanel {
     public void setPokemon(Pokemon pokemon) {
         this.pokemon = pokemon;
         initUI();
+
+        revalidate();
+        repaint();
     }
 }

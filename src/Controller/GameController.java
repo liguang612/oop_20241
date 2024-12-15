@@ -2,11 +2,9 @@ package Controller;
 
 import java.awt.Component;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.JLayeredPane;
 import javax.swing.SpringLayout;
-import javax.swing.SwingUtilities;
 
 import Data.AppConstants;
 import Data.AppConstants.GameState;
@@ -18,6 +16,7 @@ import View.Game.BattleLayer;
 import View.Game.ChangePokemon;
 import View.Game.Game;
 import View.Game.Story;
+import View.Game.BattleGround.Direction;
 import View.Game.Widget.PlayerAction;
 
 public class GameController {
@@ -75,7 +74,12 @@ public class GameController {
     private void initMatch() {
         if (ally == null)
             ally = ourPokemons.get(Utils.random(ourPokemons.size()));
+
         enemy = AppConstants.ALL_OF_POKEMONS.get(Utils.random(AppConstants.ALL_OF_POKEMONS.size())).clone();
+        // while (enemy.getId() == ally.getId()) {
+        // enemy =
+        // AppConstants.ALL_OF_POKEMONS.get(Utils.random(AppConstants.ALL_OF_POKEMONS.size())).clone();
+        // }
 
         logic();
     }
@@ -102,6 +106,10 @@ public class GameController {
                 return "Are you sure to escape the battle?";
             case escape:
                 return "You got away safely";
+            case success:
+                return "You won!";
+            case failed:
+                return "You lose!";
             default:
                 return "";
         }
@@ -130,6 +138,7 @@ public class GameController {
     public GameState next() {
         switch (state) {
             case init:
+                sendMessage(state);
                 state = GameState.action;
 
                 playerActions.setVisible(true);
@@ -196,22 +205,29 @@ public class GameController {
                         ally.setMana(ally.getMana() - cost);
 
                         sendMessage("You have just used " + skill.getName() + "!");
-                        return state;
+
+                        if (enemy.getHpLeft() <= 0) {
+                            state = GameState.success;
+                            ground.win();
+                        }
                     } else {
                         sendMessage("You don't have enough mana to use this skill");
-                        return state;
                     }
                 }
                 // Skip
                 else {
                     sendMessage("You've skipped this turn!");
-                    return state;
                 }
+
+                ground.updateAlly();
+                ground.updateEnemy();
+
+                return state;
             case attack:
                 state = GameState.skills;
 
                 // Enemy attacks ally
-                skill = enemy.getSkills()[Utils.random(3)];
+                skill = enemy.getSkills()[Utils.random(enemy.getSkills().length)];
                 // Attempt
                 if (skill.getCost() > enemy.getMana()) {
                     for (Skill s : enemy.getSkills()) {
@@ -232,9 +248,22 @@ public class GameController {
                 ally.setHpLeft((int) (ally.getHpLeft() - damage / Utils.log7(ally.getArmor())));
                 enemy.setMana(enemy.getMana() - skill.getCost());
 
-                sendMessage(enemy.getName() + " has just use " + skill.getName() + "!");
+                sendMessage(enemy.getName() + " has just use " + skill.getName() + "! Now, your turn.");
+                ground.updateAlly();
+                ground.updateEnemy();
+
+                if (ally.getHpLeft() == 0) {
+                    state = GameState.failed;
+                }
 
                 return state;
+            case success:
+                sendMessage(state);
+                ground.setDirection(Direction.enemyMoveOut);
+
+                state = GameState.pending;
+            case pending:
+
             default:
                 break;
         }

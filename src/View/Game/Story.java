@@ -15,6 +15,7 @@ import javax.swing.Timer;
 import Controller.GameController;
 import Data.AppColor;
 import Data.AppConstants;
+import Data.AppConstants.GameState;
 import View.Share.RoundPanel;
 
 public class Story extends RoundPanel implements ActionListener, KeyListener {
@@ -77,6 +78,10 @@ public class Story extends RoundPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (controller.getState() == GameState.pending) {
+            return;
+        }
+
         // Key event handler
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             controller.next();

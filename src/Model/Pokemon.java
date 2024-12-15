@@ -36,6 +36,7 @@ public class Pokemon {
         this.nature = nature;
         this.skills = skills;
         this.type = type;
+        this.armor = armor;
 
         mana = 175;
     }
@@ -139,6 +140,9 @@ public class Pokemon {
 
     public void setHpLeft(int hpLeft) {
         this.hpLeft = hpLeft;
+        if (this.hpLeft <= 0) {
+            this.hpLeft = 0;
+        }
     }
 
     public void setId(int id) {

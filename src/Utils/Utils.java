@@ -47,6 +47,8 @@ public class Utils {
     }
 
     public static double log7(double x) {
+        if (x == 0)
+            return 1;
         return Math.log(x) / Math.log(7);
     }
 

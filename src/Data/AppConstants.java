@@ -140,7 +140,8 @@ public class AppConstants {
 		attack, isAttacked,
 		success, failed,
 		win, lose,
-		escape
+		escape,
+		pending,
 	}
 
 	// GROUND
