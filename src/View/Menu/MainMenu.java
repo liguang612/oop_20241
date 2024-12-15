@@ -94,7 +94,7 @@ public class MainMenu extends JPanel {
             exit = new JLabel("Exit", JLabel.LEFT);
             exit.setForeground(newGame.getForeground());
             exit.setFont(newGame.getFont());
-            gbc.gridy = 2;
+            gbc.gridy = 1;
             mainPanel.add(exit, gbc);
 
             gbc.gridx = 0;
@@ -123,7 +123,7 @@ public class MainMenu extends JPanel {
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 mainPanel.remove(pointer);
 
-                gbc.gridy = (++option) % 3;
+                gbc.gridy = (++option) % 2;
                 mainPanel.add(pointer, gbc);
 
                 revalidate();
@@ -131,7 +131,7 @@ public class MainMenu extends JPanel {
             } else if (e.getKeyCode() == KeyEvent.VK_UP) {
                 mainPanel.remove(pointer);
 
-                option = (option + 2) % 3;
+                option = (option + 1) % 2;
                 gbc.gridy = option;
                 mainPanel.add(pointer, gbc);
 
@@ -142,11 +142,11 @@ public class MainMenu extends JPanel {
                     case 0:
                         newGame();
                         break;
-                    case 1:
-                        settings();
-                        break;
+                    // case 1:
+                    // settings();
+                    // break;
 
-                    case 2:
+                    case 1:
                         exit();
                         break;
 

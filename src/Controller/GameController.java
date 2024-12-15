@@ -63,8 +63,6 @@ public class GameController {
         battle = new BattleLayer(this);
         addGameLayer(battle);
 
-        addGameLayer(new Loser());
-
         // State
         state = GameState.init;
     }
@@ -76,7 +74,11 @@ public class GameController {
 
     private void initMatch() {
         if (ourPokemons.size() == 0) {
+            Loser loser = new Loser(this);
+            addGameLayer(loser);
+            loser.requestFocusInWindow();
 
+            return;
         }
 
         if (ally == null)
@@ -200,7 +202,7 @@ public class GameController {
                 Skill skill;
 
                 // Select skill
-                if (playerActions.option < 3) {
+                if (playerActions.option < ally.getSkills().length) {
                     // Ally attacks enemy
                     skill = ally.getSkills()[playerActions.option];
                     cost = skill.getCost();
