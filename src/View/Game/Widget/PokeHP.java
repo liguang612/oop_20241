@@ -20,7 +20,7 @@ public class PokeHP extends JPanel {
 
     // UI
     private JLabel nameLabel, levelLabel, hpLeftLabel, manaLabel;
-    private JPanel typePanel;
+    private JPanel bottomHPPanel, typePanel;
 
     public PokeHP(Pokemon pokemon) {
         super();
@@ -44,14 +44,14 @@ public class PokeHP extends JPanel {
 
         hpPanel.add(topHPPanel);
 
-        JPanel bottomHPPanel = new JPanel(new GridLayout(1, 2)) {
+        bottomHPPanel = new JPanel(new GridLayout(1, 2)) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
                 Graphics2D g2d = (Graphics2D) g;
 
-                double percent = (double) pokemon.getHpLeft() / pokemon.getHp();
+                double percent = percent();
 
                 g2d.setColor(AppColor.green02);
                 g2d.fillRect(0, 0,
@@ -106,7 +106,13 @@ public class PokeHP extends JPanel {
         this.pokemon = pokemon;
         initUI();
 
+        bottomHPPanel.revalidate();
+        bottomHPPanel.repaint();
         revalidate();
         repaint();
+    }
+
+    public double percent() {
+        return (double) pokemon.getHpLeft() / pokemon.getHp();
     }
 }

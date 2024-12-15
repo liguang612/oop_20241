@@ -89,7 +89,7 @@ public class MainMenu extends JPanel {
             settings.setForeground(newGame.getForeground());
             settings.setFont(newGame.getFont());
             gbc.gridy = 1;
-            mainPanel.add(settings, gbc);
+            // mainPanel.add(settings, gbc);
 
             exit = new JLabel("Exit", JLabel.LEFT);
             exit.setForeground(newGame.getForeground());

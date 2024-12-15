@@ -144,7 +144,6 @@ public class BattleGround extends JPanel implements ActionListener {
 				posX = 0;
 				ally.stopAnimation();
 
-				controller.sendMessage(GameState.init);
 				controller.next();
 
 				direction = null;
@@ -181,6 +180,10 @@ public class BattleGround extends JPanel implements ActionListener {
 		this.direction = direction;
 
 		if (ally != controller.getAlly().getAnimationFromBack()) {
+			if (resTimer != null)
+				resTimer.stop();
+			ally.setVisible(true);
+
 			remove(ally);
 			ally = controller.getAlly().getAnimationFromBack();
 			add(ally);
@@ -190,6 +193,10 @@ public class BattleGround extends JPanel implements ActionListener {
 			setComponentZOrder(ally, 0);
 		}
 		if (enemy != controller.getEnemy().getAnimation()) {
+			if (resTimer != null)
+				resTimer.stop();
+			enemy.setVisible(true);
+
 			remove(enemy);
 			enemy = controller.getEnemy().getAnimation();
 			add(enemy);
@@ -250,6 +257,8 @@ public class BattleGround extends JPanel implements ActionListener {
 				enemy.setVisible(false);
 				win = 3000;
 				resTimer.stop();
+
+				controller.next();
 			}
 		});
 
@@ -265,6 +274,7 @@ public class BattleGround extends JPanel implements ActionListener {
 				ally.setVisible(false);
 				lose = 3000;
 				resTimer.stop();
+				controller.next();
 			}
 		});
 

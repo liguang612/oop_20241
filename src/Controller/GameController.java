@@ -17,6 +17,7 @@ import View.Game.ChangePokemon;
 import View.Game.Game;
 import View.Game.Story;
 import View.Game.BattleGround.Direction;
+import View.Game.Widget.Loser;
 import View.Game.Widget.PlayerAction;
 
 public class GameController {
@@ -40,7 +41,7 @@ public class GameController {
 
     // DATA
     private GameState state;
-    private int level = 1;
+    private int level = 10;
 
     public GameController(List<Pokemon> pokemons) {
         // Data
@@ -49,9 +50,9 @@ public class GameController {
         // UI
         game = new Game(this);
 
-        initMatch();
-
         story = new Story(this);
+
+        initMatch();
 
         ground = new BattleGround(this);
         ground.setDirection(BattleGround.Direction.allMoveIn);
@@ -61,6 +62,8 @@ public class GameController {
 
         battle = new BattleLayer(this);
         addGameLayer(battle);
+
+        addGameLayer(new Loser());
 
         // State
         state = GameState.init;
@@ -72,14 +75,17 @@ public class GameController {
     }
 
     private void initMatch() {
+        if (ourPokemons.size() == 0) {
+
+        }
+
         if (ally == null)
             ally = ourPokemons.get(Utils.random(ourPokemons.size()));
+        else if (ally.getHpLeft() == 0) {
+            ally = ourPokemons.get(Utils.random(ourPokemons.size()));
+        }
 
         enemy = AppConstants.ALL_OF_POKEMONS.get(Utils.random(AppConstants.ALL_OF_POKEMONS.size())).clone();
-        // while (enemy.getId() == ally.getId()) {
-        // enemy =
-        // AppConstants.ALL_OF_POKEMONS.get(Utils.random(AppConstants.ALL_OF_POKEMONS.size())).clone();
-        // }
 
         logic();
     }
@@ -252,8 +258,10 @@ public class GameController {
                 ground.updateAlly();
                 ground.updateEnemy();
 
-                if (ally.getHpLeft() == 0) {
+                if (ally.getHpLeft() <= 0) {
                     state = GameState.failed;
+
+                    ground.lose();
                 }
 
                 return state;
@@ -262,8 +270,28 @@ public class GameController {
                 ground.setDirection(Direction.enemyMoveOut);
 
                 state = GameState.pending;
-            case pending:
 
+                break;
+            case failed:
+                sendMessage(state);
+                ground.setDirection(Direction.enemyMoveOut);
+
+                ourPokemons.remove(ally);
+
+                state = GameState.pending;
+
+                break;
+            case pending:
+                state = GameState.init;
+
+                playerActions.setMode(0);
+
+                initMatch();
+                ground.setDirection(Direction.enemyMoveIn);
+                ground.updateAlly();
+                ground.updateEnemy();
+
+                break;
             default:
                 break;
         }

@@ -140,6 +140,7 @@ public class PlayerAction extends RoundPanel implements KeyListener {
 
     public void setMode(int mode) {
         this.mode = mode;
+        option = -1;
         initView();
     }
 
@@ -163,6 +164,7 @@ public class PlayerAction extends RoundPanel implements KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             controller.next();
         } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            option = -1;
             controller.back();
         }
     }
