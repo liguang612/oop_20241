@@ -41,7 +41,7 @@ public class GameController {
 
     // DATA
     private GameState state;
-    private int level = 10;
+    private int level = 1;
 
     public GameController(List<Pokemon> pokemons) {
         // Data
